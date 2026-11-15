@@ -1,1 +1,114 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#191b20"><title>Retzef Client</title><link rel="icon" href="favicon.svg"><link rel="stylesheet" href="styles.css"></head><body><div class="app"><aside class="rail"><div class="logo">R</div><i></i><button class="server active">RH</button><button class="server">C</button><button class="server add">＋</button><span class="spacer"></span><button class="server">?</button></aside><aside class="side"><header class="workspace">Retzef Hub <span>⌄</span></header><div class="sidebody"><small>YOUR SPACE</small><button class="nav active">◉　Friends</button><button class="nav">✉　Direct Messages</button><small class="section">TEXT CHANNELS <b>＋</b></small><button class="channel active" data-channel="general">#　general</button><button class="channel" data-channel="announcements">#　announcements</button><button class="channel" data-channel="ideas">#　ideas</button><small class="section">VOICE CHANNELS</small><button class="channel">◖))　Lounge</button></div><footer><div class="avatar">R</div><div class="account"><b id="username">Guest</b><small id="status">Not connected</small></div><button id="settings">⚙</button></footer></aside><main><header class="top"><div class="mobilelogo">🟠 Retzef</div><div class="channelname"># <b id="channelname">general</b><span>A place for the community to chat.</span></div><div class="actions"><button>♧</button><button>?</button><button class="connect" id="connect">Connect Discord</button></div></header><section class="feed"><div class="welcome"><div class="hash">#</div><h1>Welcome to <em id="welcome-channel">#general</em></h1><p>This is the beginning of the <b id="welcome-text">#general</b> channel.</p></div><div class="divider">RETZEF CLIENT PREVIEW</div><article><div class="avatar orange">R</div><div><b>Retzef Guide</b> <label>BOT</label> <time>Today</time><p>Welcome to Retzef Client! Connect Discord to load your authorized profile. This is a UI preview; messages are not sent yet.</p></div></article></section><div class="composer"><div>＋</div><input disabled placeholder="Messaging is not enabled in this preview"><span>☺</span><small>Independent community interface · Not an official Discord product</small></div></main><aside class="members"><b>MEMBERS　1</b><small>ONLINE — 1</small><div class="member"><div class="avatar orange">R</div><div><b>Retzef Guide</b><small>Preview bot</small></div></div><div class="card"><div class="orb">↗</div><b>Bring your Discord profile</b><p>Sign in securely to see the profile information Discord allows this app to access.</p><button id="connect2">Connect Discord</button></div></aside></div><div id="toast"></div><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17191d">
+  <title>Retzef Client</title>
+  <link rel="icon" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="rail" aria-label="סרגל שרתים">
+      <div class="logo">R</div>
+      <div class="rail-divider"></div>
+      <button class="server active" aria-label="Retzef Hub">RH</button>
+      <button class="server" aria-label="הוספת שרת">＋</button>
+      <div class="space"></div>
+      <button class="server" aria-label="עזרה">?</button>
+    </aside>
+
+    <aside class="side">
+      <header class="workspace">
+        <span>Retzef Hub</span>
+        <span class="workspace-mark">⌄</span>
+      </header>
+
+      <div class="sidebody">
+        <div class="nav-group">
+          <small class="section-title">ניווט</small>
+          <button class="nav active">⌂ <span>חברים</span></button>
+          <button class="nav">✉ <span>הודעות ישירות</span></button>
+        </div>
+
+        <div class="channel-group">
+          <div class="section-heading">
+            <small>ערוצי טקסט</small>
+            <button class="icon-button" aria-label="הוספת ערוץ">＋</button>
+          </div>
+          <button class="channel active" data-channel="general"><span>#</span> כללי</button>
+          <button class="channel" data-channel="announcements"><span>#</span> עדכונים</button>
+          <button class="channel" data-channel="ideas"><span>#</span> רעיונות</button>
+        </div>
+
+        <div class="channel-group">
+          <div class="section-heading"><small>ערוצי קול</small></div>
+          <button class="channel"><span>◖</span> חדר שיחה</button>
+        </div>
+      </div>
+
+      <footer class="profile">
+        <div class="avatar">R</div>
+        <div class="account">
+          <strong id="username">אורח</strong>
+          <small id="status">לא מחובר</small>
+        </div>
+        <button id="settings" class="icon-button" aria-label="הגדרות">⚙</button>
+      </footer>
+    </aside>
+
+    <main class="main">
+      <header class="top">
+        <div class="channel-title"><span>#</span><strong id="channelname">כללי</strong></div>
+        <div class="top-actions">
+          <button class="icon-button" aria-label="התראות">♧</button>
+          <button class="icon-button" aria-label="עזרה">?</button>
+          <button class="connect" id="connect">חיבור Discord</button>
+        </div>
+      </header>
+
+      <section class="content">
+        <div class="empty-state">
+          <div class="empty-icon">#</div>
+          <h1 id="welcome-channel">ברוכים הבאים לערוץ הכללי</h1>
+          <p id="welcome-text">הערוץ מוכן לשימוש לאחר חיבור Discord והגדרת ההרשאות הנדרשות.</p>
+          <div class="empty-divider"><span>RETZEF CLIENT</span></div>
+          <div class="status-card">
+            <div class="status-icon">R</div>
+            <div>
+              <strong>Retzef Client</strong>
+              <small>ממשק קהילתי עצמאי</small>
+            </div>
+            <span class="status-pill">Preview</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="composer-wrap">
+        <div class="composer">
+          <button class="icon-button" aria-label="פעולות נוספות">＋</button>
+          <input disabled placeholder="שליחת הודעות עדיין לא זמינה">
+          <button class="icon-button" disabled aria-label="שליחה">➤</button>
+        </div>
+        <small class="composer-note">הודעות יופעלו לאחר חיבור בוט Discord והשלמת ההגדרה</small>
+      </div>
+    </main>
+
+    <aside class="members">
+      <div class="members-heading">
+        <strong>חברים</strong>
+        <span>1</span>
+      </div>
+      <small class="online-label">מחוברים · 1</small>
+      <div class="member">
+        <div class="avatar orange">R</div>
+        <div><strong>Retzef Client</strong><small>מערכת</small></div>
+        <span class="online-dot"></span>
+      </div>
+    </aside>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
