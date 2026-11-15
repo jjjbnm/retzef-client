@@ -6,42 +6,38 @@
 </head>
 <body>
 <div class="app-shell">
-  <aside class="sidebar">
-    <a class="brand" href="#" aria-label="Retzef Client"><span class="brand-mark">R</span><span>RETZEF <b>CLIENT</b></span></a>
-    <div class="workspace-switch"><span class="workspace-avatar">R</span><span><small>סביבת עבודה</small><strong>המרחב שלי</strong></span><span class="chevron">⌄</span></div>
-    <nav class="navigation" aria-label="ניווט ראשי">
-      <small class="nav-label">ראשי</small>
-      <button class="nav-item selected" data-view="home"><span class="nav-icon">⌂</span>סקירה כללית</button>
-      <button class="nav-item" data-view="messages"><span class="nav-icon">▤</span>שיחות</button>
-      <button class="nav-item" data-view="spaces"><span class="nav-icon">▦</span>מרחבים</button>
-      <button class="nav-item" data-view="activity"><span class="nav-icon">◷</span>פעילות</button>
-      <div class="nav-separator"></div>
-      <small class="nav-label">ניהול</small>
-      <button class="nav-item" data-view="connections"><span class="nav-icon">⌘</span>חיבורים</button>
-      <button class="nav-item" data-view="settings"><span class="nav-icon">⚙</span>הגדרות</button>
-    </nav>
-    <div class="sidebar-bottom">
-      <div class="connection-mini"><span class="connection-dot"></span><span><strong>Discord</strong><small id="status">לא מחובר</small></span><button id="connect" class="mini-connect">חבר</button></div>
-      <div class="user-card"><div class="user-avatar" id="user-avatar">G</div><div class="user-meta"><strong id="username">אורח</strong><small>חשבון Retzef</small></div><button id="settings" class="more-button" aria-label="הגדרות">•••</button></div>
-    </div>
-  </aside>
-  <main class="main-area">
-    <header class="header"><div class="breadcrumb">Retzef Client <span>/</span> <strong id="page-title">סקירה כללית</strong></div><div class="header-actions"><span class="environment">PREVIEW</span><button class="header-icon" aria-label="התראות">♧</button><button class="header-icon" aria-label="עזרה">?</button></div></header>
-    <section class="page-content" id="page-content">
-      <div class="welcome-row"><div><div class="eyebrow">RETZEF WORKSPACE</div><h1>המרחב שלך, במקום אחד.</h1><p>נהל את החיבורים והפעילות שלך מממשק אחד פשוט.</p></div><div class="welcome-symbol">R</div></div>
-      <div class="section-title"><div><h2>תחילת העבודה</h2><p>השלם את ההגדרה כדי להתחיל להשתמש ב־Retzef Client.</p></div></div>
-      <div class="setup-grid">
-        <article class="setup-card"><div class="card-icon orange-icon">⌘</div><div class="card-copy"><span class="step">שלב 01</span><h3>חיבור חשבון</h3><p>חבר את חשבון Discord שלך כדי לזהות את המשתמש והקהילות הזמינות.</p></div><button class="card-action" id="connect-card">חיבור חשבון <span>←</span></button></article>
-        <article class="setup-card"><div class="card-icon dark-icon">▦</div><div class="card-copy"><span class="step">שלב 02</span><h3>בחירת מרחב</h3><p>לאחר החיבור, המרחבים הזמינים שלך יופיעו כאן.</p></div><span class="coming">ממתין לחיבור</span></article>
-        <article class="setup-card"><div class="card-icon dark-icon">⚙</div><div class="card-copy"><span class="step">שלב 03</span><h3>התאמה אישית</h3><p>הגדר את סביבת העבודה ואת העדפות הממשק שלך.</p></div><button class="text-action" data-view="settings">פתיחת הגדרות <span>←</span></button></article>
-      </div>
-      <div class="bottom-grid">
-        <article class="panel"><div class="panel-heading"><h2>מצב המערכת</h2><span class="live-dot">● פעיל</span></div><div class="system-row"><span>ממשק משתמש</span><strong>מוכן</strong></div><div class="system-row"><span>חיבור Discord</span><strong id="discord-state">לא הוגדר</strong></div><div class="system-row"><span>שליחת הודעות</span><strong class="muted">טרם הופעלה</strong></div></article>
-        <article class="panel about-panel"><div class="about-mark">R</div><div><h2>Retzef Client</h2><p>סביבת תקשורת וניהול עצמאית מבית Retzef.</p><span class="version">גרסה 0.1.0</span></div></article>
-      </div>
-    </section>
-  </main>
+<aside class="sidebar">
+<a class="brand" href="#"><span class="brand-mark">R</span><span>RETZEF <b>CLIENT</b></span></a>
+<div class="workspace-switch"><span class="workspace-avatar">R</span><span><small>סביבת עבודה</small><strong>המרחב שלי</strong></span><span class="chevron">⌄</span></div>
+<nav class="navigation" aria-label="ניווט ראשי">
+<small class="nav-label">ראשי</small>
+<button class="nav-item selected" data-view="home"><span class="nav-icon">⌂</span>סקירה כללית</button>
+<button class="nav-item" data-view="messages"><span class="nav-icon">▤</span>שיחות</button>
+<button class="nav-item" data-view="spaces"><span class="nav-icon">▦</span>מרחבים</button>
+<button class="nav-item" data-view="activity"><span class="nav-icon">◷</span>פעילות</button>
+<div class="nav-separator"></div><small class="nav-label">ניהול</small>
+<button class="nav-item" data-view="connections"><span class="nav-icon">⌘</span>חיבורים</button>
+<button class="nav-item" data-view="settings"><span class="nav-icon">⚙</span>הגדרות</button>
+</nav>
+<div class="sidebar-bottom">
+<div class="connection-mini"><span class="connection-dot" id="connection-dot"></span><span><strong>Discord</strong><small id="status">לא מחובר</small></span><button id="connect" class="mini-connect">חבר</button></div>
+<div class="user-card"><div class="user-avatar" id="user-avatar">G</div><div class="user-meta"><strong id="username">אורח</strong><small>חשבון Retzef</small></div><button id="settings" class="more-button" aria-label="הגדרות">•••</button></div>
+</div></aside>
+<main class="main-area">
+<header class="header"><div class="breadcrumb">Retzef Client <span>/</span> <strong id="page-title">סקירה כללית</strong></div><div class="header-actions"><span class="environment">PREVIEW</span><button class="header-icon" aria-label="התראות">♧</button><button class="header-icon" aria-label="עזרה">?</button></div></header>
+<section class="page-content" id="page-content">
+<div class="welcome-row"><div><div class="eyebrow">RETZEF WORKSPACE</div><h1>המרחב שלך, במקום אחד.</h1><p>נהל את החיבורים והפעילות שלך מממשק אחד פשוט.</p></div><div class="welcome-symbol">R</div></div>
+<div class="section-title"><div><h2>תחילת העבודה</h2><p>השלם את ההגדרה כדי להתחיל להשתמש ב־Retzef Client.</p></div></div>
+<div class="setup-grid">
+<article class="setup-card"><div class="card-icon orange-icon">⌘</div><div class="card-copy"><span class="step">שלב 01</span><h3>חיבור חשבון</h3><p>חבר את חשבון Discord שלך כדי לזהות את המשתמש והמרחבים הזמינים.</p></div><button class="card-action" id="connect-card">חיבור חשבון <span>←</span></button></article>
+<article class="setup-card"><div class="card-icon dark-icon">▦</div><div class="card-copy"><span class="step">שלב 02</span><h3>המרחבים שלך</h3><p>המרחבים שאליהם יש לך גישה יוצגו כאן לאחר החיבור.</p></div><span class="coming" id="spaces-status">ממתין לחיבור</span></article>
+<article class="setup-card"><div class="card-icon dark-icon">⚙</div><div class="card-copy"><span class="step">שלב 03</span><h3>התאמה אישית</h3><p>הגדר את סביבת העבודה ואת העדפות הממשק שלך.</p></div><button class="text-action" data-view="settings">פתיחת הגדרות <span>←</span></button></article>
 </div>
-<div id="toast" role="status" aria-live="polite"></div>
-<script src="app.js"></script>
+<section class="guilds-panel" id="guilds-panel" hidden><div class="panel-heading"><div><h2>המרחבים המחוברים</h2><p>הקהילות הזמינות בחשבון Discord שלך.</p></div><span id="guild-count" class="guild-count">0</span></div><div id="guild-list" class="guild-list"></div></section>
+<div class="bottom-grid">
+<article class="panel"><div class="panel-heading"><h2>מצב המערכת</h2><span class="live-dot">● פעיל</span></div><div class="system-row"><span>ממשק משתמש</span><strong>מוכן</strong></div><div class="system-row"><span>חיבור Discord</span><strong id="discord-state">לא הוגדר</strong></div><div class="system-row"><span>שליחת הודעות</span><strong class="muted">טרם הופעלה</strong></div></article>
+<article class="panel about-panel"><div class="about-mark">R</div><div><h2>Retzef Client</h2><p>סביבת תקשורת וניהול עצמאית מבית Retzef.</p><span class="version">גרסה 0.1.0</span></div></article>
+</div>
+</section></main></div>
+<div id="toast" role="status" aria-live="polite"></div><script src="app.js"></script>
 </body></html>
