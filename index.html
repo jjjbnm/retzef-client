@@ -1,98 +1,50 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#5865f2"><title>Retzef Client</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#5865f2">
+<title>Plugins · Retzef Client</title>
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<div class="client">
-  <aside class="servers-rail">
-    <button class="rail-logo active" id="homeBtn" title="Retzef Home">R</button>
-    <div class="rail-separator"></div>
-    <div id="serverRail" class="server-icons"><div class="server-icon placeholder">+</div></div>
-    <button class="rail-add" id="addServer" title="הוספת שרת">+</button>
-    <div class="rail-bottom"><button class="rail-icon" id="settingsBtn" title="הגדרות">⚙</button></div>
-  </aside>
-
-  <aside class="channel-sidebar">
-    <div class="server-header"><strong id="serverHeading">הודעות פרטיות</strong><button id="serverMenu" aria-label="תפריט">⌄</button></div>
-    <div class="sidebar-search"><span>⌕</span><input id="serverSearch" placeholder="חיפוש שרתים"></div>
-    <div class="sidebar-scroll">
-      <button class="side-item selected" data-room="home"><span class="side-symbol">✉</span> הודעות פרטיות</button>
-      <button class="side-item" data-room="friends"><span class="side-symbol">♙</span> חברים <span class="side-add">+</span></button>
-      <div class="side-section"><span>השרתים שלך</span><button id="refreshServers" title="רענון">↻</button></div>
-      <div id="serverTextList"><div class="side-empty">התחבר כדי לראות שרתים</div></div>
-      <div class="side-section"><span>ערוצי טקסט</span><span>⌄</span></div>
-      <button class="channel-row muted-channel" title="ערוצים ייטענו לאחר חיבור API מתאים"><span>#</span> general</button>
-      <button class="channel-row muted-channel"><span>#</span> announcements</button>
-      <div class="side-section"><span>הודעות ישירות</span><button id="newDm">+</button></div>
-      <div class="side-empty">אין עדיין שיחות להצגה</div>
+<main class="plugins-app">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Retzef Client"><span class="brand-mark">R</span><span>RETZEF CLIENT</span></a>
+    <div class="topbar-right"><span class="topbar-label">PLUGIN CENTER</span><span class="avatar" id="userAvatar">R</span></div>
+  </header>
+  <section class="page">
+    <div class="page-heading">
+      <div class="eyebrow">RETZEF CLIENT / EXTENSIONS</div>
+      <h1>Plugins</h1>
+      <p>נהל את החיבורים וההרחבות של Retzef Client במקום אחד.</p>
     </div>
-    <div class="account-bar">
-      <div class="account-avatar" id="avatar">R</div>
-      <div class="account-meta"><b id="username">אורח</b><small id="userTag">לא מחובר</small></div>
-      <button id="connect" class="connect-mini">התחבר</button>
-      <button id="logout" class="account-action" hidden title="יציאה">↪</button>
+    <div class="toolbar">
+      <div class="search"><span>⌕</span><input id="pluginSearch" type="search" placeholder="חיפוש Plugins"></div>
+      <span class="count" id="pluginCount">1 plugin</span>
     </div>
-  </aside>
-
-  <main class="chat-area">
-    <header class="chat-header">
-      <button class="mobile-toggle" id="mobileChannels">☰</button>
-      <div class="room-title"><span class="hash">✉</span><strong id="roomTitle">הודעות פרטיות</strong><span class="room-subtitle" id="roomSubtitle">Retzef Client</span></div>
-      <div class="header-actions">
-        <button title="התראות">♧</button><button title="הצמדות">⌑</button>
-        <button id="toggleMembers" title="רשימת חברים">♙</button>
-        <div class="top-search"><input id="globalSearch" placeholder="חיפוש"><span>⌕</span></div>
-        <button id="profileBtn" title="החשבון שלי">●</button>
-      </div>
-    </header>
-
-    <section class="welcome" id="welcomePanel">
-      <div class="welcome-mark">R</div>
-      <div class="welcome-kicker">RETZEF CLIENT · BLUE EDITION</div>
-      <h1>המרחב שלך. בדרך שלך.</h1>
-      <p>ממשק קהילות בסגנון Discord, עם חיבור לחשבון Discord שלך.</p>
-      <div class="welcome-actions"><button id="welcomeConnect" class="primary">התחברות עם Discord</button><button id="exploreServers" class="secondary">השרתים שלי</button></div>
-      <div class="welcome-grid">
-        <article><span>◈</span><b>השרתים שלך</b><small id="guildSummary">התחבר כדי לטעון את השרתים</small></article>
-        <article><span>♙</span><b>החשבון שלך</b><small id="accountSummary">פרופיל וחיבורים</small></article>
-        <article><span>⌘</span><b>Plugins</b><small>הרחבות ל־Retzef Client</small></article>
-      </div>
-    </section>
-
-    <section class="conversation" id="conversationPanel" hidden>
-      <div class="conversation-empty">
-        <div class="empty-bubble">#</div><h2 id="emptyTitle">ברוכים הבאים!</h2>
-        <p id="emptyDescription">כאן תופיע השיחה שלך.</p>
-        <div class="api-note">הצגת ושליחת הודעות דורשת גישה ש־Discord מאשר. החיבור הרגיל לחשבון אינו מעניק גישה לכל ההודעות.</div>
-      </div>
-      <div class="composer-wrap">
-        <div class="composer"><button disabled title="לא זמין כרגע">＋</button><input id="messageInput" disabled placeholder="שליחת הודעות עדיין לא זמינה בחיבור הזה"><button disabled>GIF</button><button disabled>☺</button></div>
-        <small>Retzef Client משתמש ב־OAuth הרשמי. לא נעשה שימוש ב־User Token.</small>
-      </div>
-    </section>
-
-    <section class="friends-view" id="friendsPanel" hidden>
-      <div class="friends-tabs"><button class="active">חברים</button><button>בקשות בהמתנה</button><button>הוסף חבר</button></div>
-      <div class="friends-empty"><div>♙</div><h2>החברים שלך יופיעו כאן</h2><p>Discord OAuth רגיל אינו מספק רשימת חברים מלאה לניהול באפליקציית צד שלישי.</p></div>
-    </section>
-  </main>
-
-  <aside class="members-sidebar" id="membersSidebar">
-    <div class="members-title">פרטי חשבון</div>
-    <div class="profile-card">
-      <div class="profile-cover"></div><div class="profile-avatar" id="profileAvatar">R</div>
-      <h3 id="profileName">אורח</h3><p id="profileId">לא מחובר</p>
-      <div class="profile-divider"></div><small>סטטוס חיבור</small><div class="connection-status"><i id="statusDot"></i><span id="statusText">לא מחובר</span></div>
-      <button id="manageAccount" class="profile-button">ניהול חשבון</button>
-      <button id="disconnect" class="profile-button secondary-button" hidden>התנתקות</button>
+    <div class="plugin-grid" id="pluginGrid">
+      <article class="plugin-card" data-name="discord">
+        <div class="card-top">
+          <div class="plugin-icon discord-icon">◉</div>
+          <span class="status" id="discordStatus"><i></i> לא מחובר</span>
+        </div>
+        <h2>Discord</h2>
+        <p class="description">חבר את חשבון Discord שלך כדי להציג את פרטי החשבון והשרתים הזמינים דרך OAuth.</p>
+        <div class="permissions">
+          <span>פרופיל</span><span>שרתים</span><span>חיבורים</span>
+        </div>
+        <div class="card-footer">
+          <div class="plugin-account" id="discordAccount">נדרש חיבור לחשבון</div>
+          <button class="plugin-button" id="discordAction">Connect</button>
+        </div>
+      </article>
+      <div class="empty-search" id="emptySearch" hidden>לא נמצאו Plugins מתאימים.</div>
     </div>
-    <div class="members-foot"><span class="online-dot"></span> Retzef Client <span>v1.0</span></div>
-  </aside>
-</div>
+    <footer class="page-footer"><span class="footer-dot"></span> Retzef Client <span>·</span> Plugins only</footer>
+  </section>
+</main>
 <div class="toast" id="toast" role="status"></div>
-<div class="modal-backdrop" id="modal" hidden><div class="modal"><button class="modal-close" id="closeModal">×</button><div class="modal-logo">R</div><h2 id="modalTitle">הגדרות</h2><p id="modalText">Retzef Client · Blue Edition</p><div id="modalDetails"></div><button id="modalOk" class="primary">סגור</button></div></div>
 <script src="/app.js"></script>
-</body></html>
+</body>
+</html>
