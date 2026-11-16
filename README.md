@@ -1,14 +1,11 @@
-# Retzef Plugins
+# Retzef Client
 
-A standalone, mobile-friendly plugin manager for Retzef.
+A standalone Retzef workspace with chats, a Plugins manager, and settings.
 
-## Features
-- Search your plugin list.
-- Add and view plugin entries.
-- Optional HTTPS link for each entry.
-- Plugin entries are stored locally in the current browser.
+- Home dashboard
+- Local chat history and message drafts (no AI backend connected yet)
+- Create, edit, search, and delete Plugin entries
+- Workspace preferences
+- Responsive RTL Hebrew interface
 
-Adding an entry does not install, connect, or execute external plugin code.
-
-## Deploy
-Import this repository into Vercel as a static project. The output directory is the repository root; no build command is required.
+All current data is stored in the browser's local storage. Plugin entries are metadata only; external plugin execution and integrations are not enabled yet.

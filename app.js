@@ -1,27 +1,26 @@
 const $=id=>document.getElementById(id);
-const STORAGE_KEY='retzef.plugins.v1';
-let plugins=readPlugins();
-let filter='all';
-function readPlugins(){try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(value)?value:[]}catch{return[]}}
-function savePlugins(){localStorage.setItem(STORAGE_KEY,JSON.stringify(plugins))}
-function safeUrl(value){if(!value)return'';try{const url=new URL(value);return url.protocol==='https:'?url.href:''}catch{return''}}
-function render(){
- const query=$('searchInput').value.trim().toLowerCase();
- const shown=plugins.filter(p=>(filter==='all'||filter==='installed')&&((p.name+' '+p.description).toLowerCase().includes(query)));
- $('resultCount').textContent=shown.length+' PLUGIN'+(shown.length===1?'':'S');
- $('pluginGrid').innerHTML=shown.map(p=>'<article class="plugin-card"><div class="card-top"><div class="plugin-symbol">'+escapeHtml(p.name.slice(0,1).toUpperCase())+'</div><span class="added-tag">Added</span></div><div><h3>'+escapeHtml(p.name)+'</h3><p>'+escapeHtml(p.description||'No description provided.')+'</p></div>'+(p.url?'<a class="card-url" href="'+escapeHtml(p.url)+'" target="_blank" rel="noopener noreferrer">'+escapeHtml(p.url)+'</a>':'')+'</article>').join('');
- $('emptyState').hidden=shown.length!==0;
-}
-function escapeHtml(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function openDialog(){$('pluginDialog').showModal();$('pluginName').focus()}
-function closeDialog(){$('pluginDialog').close()}
-function toast(message){$('toast').textContent=message;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2300)}
-$('addPlugin').addEventListener('click',openDialog);
-$('emptyAdd').addEventListener('click',openDialog);
-$('closeDialog').addEventListener('click',closeDialog);
-$('cancelDialog').addEventListener('click',closeDialog);
-$('searchInput').addEventListener('input',render);
-document.querySelectorAll('.filter').forEach(button=>button.addEventListener('click',()=>{filter=button.dataset.filter;document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b===button));render()}));
-$('pluginForm').addEventListener('submit',event=>{event.preventDefault();const name=$('pluginName').value.trim();const description=$('pluginDescription').value.trim();const rawUrl=$('pluginUrl').value.trim();const url=safeUrl(rawUrl);if(!name)return;if(rawUrl&&!url){toast('Please use a valid HTTPS URL.');return}plugins.unshift({id:Date.now(),name,description,url});savePlugins();$('pluginForm').reset();closeDialog();render();toast('Plugin added to this browser.')});
-document.addEventListener('keydown',event=>{if(event.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)&&!$('pluginDialog').open){event.preventDefault();$('searchInput').focus()}});
-render();
+const KEY='retzef.client.v2';
+let data=load(),activeChat=null,editingId=null;
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{chats:[],plugins:[],workspace:'Retzef'}}catch{return{chats:[],plugins:[],workspace:'Retzef'}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2100)}
+function go(view){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$('view-'+view).classList.add('active');document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.view===view));const names={home:'ראשי',chats:'השיחות שלי',chat:'שיחה',plugins:'Plugins',settings:'הגדרות'};$('pageName').textContent=names[view]||view;if(view==='plugins')renderPlugins();if(view==='chats')renderChats();if(view==='home')renderHome()}
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+function newChat(){const chat={id:Date.now(),title:'שיחה חדשה',messages:[],updated:Date.now()};data.chats.unshift(chat);activeChat=chat.id;save();openChat()}
+function openChat(){const chat=data.chats.find(c=>c.id===activeChat);if(!chat)return;$('chatTitle').textContent=chat.title;renderMessages();go('chat');$('messageInput').focus()}
+function renderMessages(){const c=data.chats.find(x=>x.id===activeChat);$('messages').innerHTML=c&&c.messages.length?c.messages.map(m=>'<div class="message">'+esc(m)+'</div>').join(''):'<div class="chat-empty"><div class="chat-mark">R</div><h2>במה אפשר לעזור?</h2><p>ממשק השיחות של Retzef Client</p></div>'}
+function renderChats(){$('chatList').innerHTML=data.chats.length?data.chats.map(c=>'<div class="list-row" data-chat="'+c.id+'"><div class="list-icon">▤</div><div class="list-info"><b>'+esc(c.title)+'</b><small>'+c.messages.length+' הודעות</small></div><span class="muted">←</span></div>').join():'<div class="empty-small">עדיין אין שיחות. לחץ על שיחה חדשה כדי להתחיל.</div>';document.querySelectorAll('[data-chat]').forEach(el=>el.addEventListener('click',()=>{activeChat=Number(el.dataset.chat);openChat()}))}
+function renderHome(){$('recentChats').innerHTML=data.chats.slice(0,6).map(c=>'<button data-recent="'+c.id+'">'+esc(c.title)+'</button>').join('');document.querySelectorAll('[data-recent]').forEach(el=>el.addEventListener('click',()=>{activeChat=Number(el.dataset.recent);openChat()}));$('homeRecent').innerHTML=data.chats.length?data.chats.slice(0,4).map(c=>'<div class="list-row" data-homechat="'+c.id+'"><div class="list-icon">▤</div><div class="list-info"><b>'+esc(c.title)+'</b><small>'+c.messages.length+' הודעות</small></div></div>').join(''):'עדיין אין שיחות. התחל שיחה חדשה כדי לראות אותה כאן.';document.querySelectorAll('[data-homechat]').forEach(el=>el.addEventListener('click',()=>{activeChat=Number(el.dataset.homechat);openChat()}));$('pluginBadge').textContent=data.plugins.length}
+$('newChat').addEventListener('click',newChat);$('newChat2').addEventListener('click',newChat);$('backChats').addEventListener('click',()=>go('chats'));
+$('messageForm').addEventListener('submit',e=>{e.preventDefault();const text=$('messageInput').value.trim();if(!text)return;const c=data.chats.find(x=>x.id===activeChat);if(!c)return;c.messages.push(text);if(c.title==='שיחה חדשה')c.title=text.slice(0,32);c.updated=Date.now();data.chats.sort((a,b)=>b.updated-a.updated);save();$('messageInput').value='';$('chatTitle').textContent=c.title;renderMessages();renderHome();toast('ההודעה נשמרה בשיחה המקומית')});
+function openPluginDialog(id=null){editingId=id;const p=id?data.plugins.find(x=>x.id===id):null;$('dialogTitle').textContent=p?'עריכת Plugin':'יצירת Plugin';$('pluginName').value=p?.name||'';$('pluginDescription').value=p?.description||'';$('pluginCategory').value=p?.category||'Tools';$('pluginUrl').value=p?.url||'';$('pluginDialog').showModal()}
+function closeDialog(){$('pluginDialog').close();editingId=null}
+$('createPlugin').addEventListener('click',()=>openPluginDialog());$('createFirst').addEventListener('click',()=>openPluginDialog());$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);
+$('pluginForm').addEventListener('submit',e=>{e.preventDefault();const name=$('pluginName').value.trim(),url=$('pluginUrl').value.trim();if(!name)return;if(url){try{if(new URL(url).protocol!=='https:')throw 0}catch{toast('יש להזין כתובת HTTPS תקינה');return}}const p={id:editingId||Date.now(),name,description:$('pluginDescription').value.trim(),category:$('pluginCategory').value,url};if(editingId)data.plugins=data.plugins.map(x=>x.id===editingId?p:x);else data.plugins.unshift(p);save();closeDialog();renderPlugins();renderHome();toast(editingId?'Plugin עודכן':'Plugin נוצר')});
+function renderPlugins(){const q=$('pluginSearch').value.trim().toLowerCase(),list=data.plugins.filter(p=>(p.name+' '+p.description+' '+p.category).toLowerCase().includes(q));$('pluginCount').textContent=list.length+' PLUGINS';$('pluginGrid').innerHTML=list.map(p=>'<article class="plugin-card"><div class="plugin-card-top"><div class="plugin-icon">▦</div><span class="tag">'+esc(p.category)+'</span></div><div><h3>'+esc(p.name)+'</h3><p>'+esc(p.description||'אין תיאור לתוסף זה.')+'</p></div>'+(p.url?'<a href="'+esc(p.url)+'" target="_blank" rel="noopener noreferrer">'+esc(p.url)+'</a>':'')+'<div class="card-actions"><button data-edit="'+p.id+'">עריכה</button><button data-delete="'+p.id+'">מחיקה</button></div></article>').join('');$('pluginEmpty').hidden=list.length>0;$('pluginGrid').style.display=list.length?'grid':'none';document.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openPluginDialog(Number(b.dataset.edit))));document.querySelectorAll('[data-delete]').forEach(b=>b.addEventListener('click',()=>{data.plugins=data.plugins.filter(p=>p.id!==Number(b.dataset.delete));save();renderPlugins();renderHome();toast('Plugin נמחק')}))}
+$('pluginSearch').addEventListener('input',renderPlugins);
+$('workspaceName').value=data.workspace||'Retzef';$('workspaceName').addEventListener('change',e=>{data.workspace=e.target.value.trim()||'Retzef';save();toast('ההגדרות נשמרו')});
+$('profileMenu').addEventListener('click',()=>toast('החשבון המקומי פעיל'));
+renderHome();renderPlugins();
