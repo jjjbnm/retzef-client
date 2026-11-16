@@ -1,1 +1,0 @@
-module.exports=(req,res)=>{res.setHeader('Cache-Control','no-store');res.setHeader('Set-Cookie','rz_session=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0');res.setHeader('Set-Cookie',['rz_session=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0','rz_state=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0']);return res.redirect(302,'/')};
