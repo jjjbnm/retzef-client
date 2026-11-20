@@ -9,5 +9,6 @@
   "display": "standalone",
   "background_color": "#090d0a",
   "theme_color": "#090d0a",
-  "orientation": "any"
+  "orientation": "any",
+  "categories": ["games", "utilities"]
 }

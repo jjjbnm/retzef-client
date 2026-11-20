@@ -1,36 +1,29 @@
-# Retzef Client 1.18.0
+# Retzef Client 1.28.17
 
-Xbox-inspired, Hebrew RTL discovery hub for game clients, launchers, games and companion apps.
+Xbox-inspired Hebrew RTL gaming discovery hub for clients, launchers, apps and games.
 
-## Version
-- Previous baseline: 1.0.0
-- Current release: **1.18.0**
-- Release type: major feature milestone (18th minor feature line)
+## Release 1.28.17
+- Expanded curated directory with ATLauncher, GDLauncher, VS Code, GitHub Desktop, Chrome, Firefox, Telegram and Spotify.
+- Personal shortcuts: save up to 50 HTTPS links locally with a name, description and platform.
+- Backup and restore: export favorites, recent history, personal shortcuts and display preferences to JSON; import a validated backup on another device.
+- Grid/list catalog display toggle, remembered on the current device.
+- Improved search shortcut (`Ctrl/⌘ + K` or `/`), quick add shortcut button and copy-link action.
+- Dedicated personal shortcuts navigation and updated settings/privacy panel.
+- Improved offline navigation fallback and PWA cache versioning.
+- Updated release metadata, manifest and custom favicon.
 
-## What's new in 1.18.0
-- Rebuilt responsive dashboard with a clearer library-first layout.
-- Expanded curated catalog with OBS Studio, VLC and Epic Games Launcher.
-- Live search across names, categories, platforms and compatibility notes.
-- Filter by product category and platform.
-- Sort alphabetically or by featured order.
-- Compare up to three catalog entries side-by-side.
-- Favorites with persistent local storage.
-- Recently viewed list stored locally.
-- Light/dark appearance toggle.
-- Dedicated settings and privacy information.
-- Improved keyboard navigation, focus states, dialogs and mobile navigation.
-- Updated PWA service-worker cache to v1.18.0.
-- Dynamic catalog statistics and release panel.
+## Previous release
+- 1.18.0: dashboard, search, filters, compare, favorites, history, theme toggle and PWA basics.
 
 ## Catalog
-Minecraft Java clients and launchers: Lunar Client, Badlion Client, Feather Client, Prism Launcher, Modrinth App, CurseForge and Epic Games Launcher.
-Apps: Discord, Steam, Roblox, Xbox, OBS Studio and VLC.
+Minecraft clients and launchers: Lunar Client, Badlion Client, Feather Client, Prism Launcher, Modrinth App, CurseForge, Epic Games Launcher, ATLauncher and GDLauncher.
+Apps: Discord, Steam, Roblox, Xbox, OBS Studio, VLC, Visual Studio Code, GitHub Desktop, Chrome, Firefox, Telegram and Spotify.
 Games: Minecraft and Brawl Stars.
 
 ## Run
 Serve this directory as a static website or deploy to Vercel. No build step or package installation is required.
 
 ## Privacy and safety
-Retzef Client is a discovery hub. It does not collect passwords, request third-party credentials, patch apps, or install third-party software. Favorites, recent items and theme preference are stored in the browser's local storage. External links point to developer websites.
+Retzef Client does not request third-party passwords or credentials, patch apps, or install third-party software. Favorites, recent items, personal shortcuts, theme and view preferences are stored locally in the browser. Personal shortcuts accept HTTPS URLs only. Backups are generated locally and are never uploaded by the app. External catalog links point to developer websites.
 
-Compatibility is informational and may change by app version. Check the official developer website for current system requirements. Retzef Client is an independent project and is not officially affiliated with listed brands.
+Compatibility information may change; check each developer's official site. Retzef Client is independent and not affiliated with listed brands.
