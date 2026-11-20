@@ -3,7 +3,6 @@
 'use strict';
 const V='5.50.50.50';
 const $=s=>document.querySelector(s);
-const safeRead=(key,fallback)=>{try{const v=JSON.parse(localStorage.getItem(key));return v??fallback}catch{return fallback}};
 const originalSetPage=window.setPage;
 function quickItems(){
  const ids=[...(typeof v2Pinned!=='undefined'&&Array.isArray(v2Pinned)?v2Pinned:[]),...(typeof favorites!=='undefined'&&Array.isArray(favorites)?favorites:[])];
@@ -48,6 +47,6 @@ if(typeof originalSetPage==='function')window.setPage=function(p){if(p==='update
 const nav=$('.nav');if(nav&&!nav.querySelector('[data-page="updates"]')){const b=document.createElement('button');b.type='button';b.className='nav-link';b.dataset.page='updates';b.innerHTML='<span class="nav-icon">✦</span>מרכז עדכונים';nav.append(b)}
 const top=$('.top-right');if(top&&!$('#v5QuickBtn')){const b=document.createElement('button');b.type='button';b.id='v5QuickBtn';b.className='top-icon';b.title='גישה מהירה · Ctrl+Shift+L';b.setAttribute('aria-label','גישה מהירה');b.textContent='⚡';b.dataset.v5Action='quick';top.append(b)}
 document.addEventListener('click',e=>{const action=e.target.closest('[data-v5-action]');if(!action)return;const a=action.dataset.v5Action;if(a==='quick')showQuickBar();if(a==='updates')openReleaseCenter();if(a==='home'&&typeof originalSetPage==='function')originalSetPage('home');if(a==='focus'){document.body.classList.toggle('v5-focus-mode');try{localStorage.setItem('retzef-client-focus',document.body.classList.contains('v5-focus-mode')?'1':'0')}catch{};if(typeof window.toast==='function')window.toast(document.body.classList.contains('v5-focus-mode')?'מצב ריכוז הופעל':'מצב ריכוז כובה')}},true);
-document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='l'){e.preventDefault();showQuickBar()}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='u'){e.preventDefault();openReleaseCenter()}if(e.key==='Escape'){const bar=$('#v5QuickBar');if(bar)bar.hidden=true}},true);
-if(safeRead('retzef-client-focus',false))document.body.classList.add('v5-focus-mode');
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='l'){e.preventDefault();showQuickBar()}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='u'){e.preventDefault();openReleaseCenter()}if((e.ctrlKey||e.metaKey)&&!e.shiftKey&&e.key.toLowerCase()==='k'){e.preventDefault();const search=$('#search');if(search){search.focus();search.select()}}if(e.key==='Escape'){const bar=$('#v5QuickBar');if(bar)bar.hidden=true}},true);
+try{if(localStorage.getItem('retzef-client-focus')==='1')document.body.classList.add('v5-focus-mode')}catch{}
 })();

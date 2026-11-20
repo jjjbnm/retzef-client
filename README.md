@@ -5,8 +5,8 @@ Xbox-inspired Hebrew RTL gaming discovery hub for clients, launchers, apps and g
 ## 5.50.50.50 release additions
 - Dedicated Release Center with version information and a local system diagnostic panel.
 - Quick Launch shelf built from the user's existing pinned and favorite library items.
-- Keyboard shortcuts: Ctrl/⌘+Shift+L for Quick Launch and Ctrl/⌘+Shift+U for Release Center.
-- Focus mode to reduce visual distractions and motion.
+- Keyboard shortcuts: Ctrl/⌘+Shift+L for Quick Launch, Ctrl/⌘+Shift+U for Release Center, and Ctrl/⌘+K to focus search.
+- Focus mode to reduce visual distractions and motion; its preference is restored after refresh.
 - Mobile-friendly Release Center and Quick Launch shelf.
 - Updated PWA cache version and precache list.
 
@@ -24,3 +24,8 @@ Personal notes, tags, collections, favorites, pins, shortcuts and preferences ar
 
 ## Run
 Serve this directory as a static website or deploy it to Vercel.
+
+## 5.50.50.50 bug-fix batch
+- Fixed focus-mode preference restoration after reload.
+- Implemented the advertised Ctrl/⌘+K search shortcut.
+- Corrected the release-panel text so it describes this release rather than repeating 2.0.0 feature counts.
