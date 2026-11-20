@@ -1,19 +1,24 @@
-# Retzef Client
+# Retzef Client — Preview 0.3.0
 
-Retzef Client is an Xbox-inspired, responsive game and app library for web, Android and Windows.
+Xbox-inspired discovery hub for game clients, launchers, games and companion apps.
 
-## Preview 0.2.0
-- Responsive dark Xbox-inspired interface
-- Search, category filters and favorites
-- App/game details with official external links
-- Local favorites storage
-- PWA manifest and service worker for installability
-- No account passwords or credentials are collected
+## Features
+- Hebrew RTL responsive interface for desktop and mobile
+- Retzef Client custom SVG identity and visual system
+- Searchable library with categories for Clients, Launchers, Apps and Games
+- Compatibility labels for Windows, macOS, Linux, Android, iOS, Console and Web
+- Detail panels with compatibility notes and official developer links
+- Local favorites, PWA install support and offline shell caching
 
-## Run locally
-Serve this folder with any static web server, or deploy it to Vercel as a static site.
+## Curated catalog
+Minecraft Java clients and launchers: Lunar Client, Badlion Client, Feather Client, Prism Launcher, Modrinth App and CurseForge.
+Apps: Discord, Steam, Roblox and Xbox.
+Games: Minecraft and Brawl Stars.
 
-## Important
-This version is a library/launcher-style directory. It does not install or run third-party games, modify Discord, or provide unofficial authentication. Official services open on their own websites.
+Compatibility is informational and may change by app version. Check the official developer website for current system requirements.
 
-Made with Retzef Client.
+## Run
+Serve this directory as a static website or deploy to Vercel. No build step is required.
+
+## Safety and privacy
+Retzef Client is a discovery hub. It does not collect passwords, ask for third-party credentials, patch apps, or install third-party software. All external links go to official developer websites.
