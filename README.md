@@ -29,3 +29,12 @@ Serve this directory as a static website or deploy it to Vercel.
 - Fixed focus-mode preference restoration after reload.
 - Implemented the advertised Ctrl/⌘+K search shortcut.
 - Corrected the release-panel text so it describes this release rather than repeating 2.0.0 feature counts.
+
+
+## Custom Clients hub
+
+Retzef Client is a discovery and local management hub for existing third-party clients. The directory includes Discord-related clients/modifications (Vesktop, Vencord, BetterDiscord) and Minecraft Java clients (Lunar, Badlion, Feather, Laby Client). Entries link to project-controlled official sources; compatibility and terms may change. Discord client modifications may conflict with Discord's Terms of Service.
+
+The app can save favorites and a local "My Clients" list. Marking an item as installed is only a local checklist and does not install or launch native software. Native installation and launching are handled by the original app/installer. A browser/PWA cannot silently install or execute arbitrary desktop/mobile applications.
+
+The directory is filtered by target app (Discord / Minecraft) and platform. The responsive layout has additional small-screen adjustments.
