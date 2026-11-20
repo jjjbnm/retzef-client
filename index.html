@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101510"><meta name="description" content="Retzef Client — מרכז המשחקים והאפליקציות שלך.">
+  <link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css">
+  <title>Retzef Client</title>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Retzef Client home"><span class="brand-mark">R</span><span>RETZEF <b>CLIENT</b></span></a>
+      <div class="side-label">תפריט ראשי</div>
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="home"><span>⌂</span> בית</button>
+        <button class="nav-item" data-view="games"><span>▣</span> משחקים</button>
+        <button class="nav-item" data-view="apps"><span>▦</span> אפליקציות</button>
+        <button class="nav-item" data-view="favorites"><span>♡</span> מועדפים</button>
+      </nav>
+      <div class="side-label library-label">הספרייה שלך</div>
+      <div class="library-mini" id="libraryMini"><span class="mini-dot"></span><span>עוד לא הוספת מועדפים</span></div>
+      <div class="sidebar-bottom"><button class="nav-item" data-view="settings"><span>⚙</span> הגדרות</button><div class="profile-chip"><div class="avatar">R</div><div><b>Retzef User</b><small>הספרייה שלי</small></div><span class="online-dot"></span></div></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><button class="mobile-menu" id="menuBtn" aria-label="פתח תפריט">☰</button><div class="breadcrumb">RETZEF CLIENT <span>/</span> <b id="crumb">בית</b></div><div class="top-actions"><label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="חיפוש משחקים ואפליקציות..." autocomplete="off"><kbd>⌘ K</kbd></label><button class="icon-button" id="installBtn" title="התקנה" hidden>↓</button><div class="top-avatar">R</div></div></header>
+      <section class="content" id="content">
+        <div class="welcome-row"><div><div class="eyebrow"><i></i> מרכז הבקרה שלך</div><h1>המשחקים שלך.<br><span>העולם שלך.</span></h1><p>כל מה שאתה אוהב, במקום אחד.</p></div><div class="welcome-badge"><span>✦</span><small>RETZEF<br>EXPERIENCE</small></div></div>
+        <section class="hero-card"><div class="hero-glow"></div><div class="hero-copy"><span class="pill">FEATURED EXPERIENCE</span><h2>MINECRAFT</h2><p>בנה, חקור וצור עולמות משלך. ההרפתקה הבאה שלך מתחילה כאן.</p><div class="hero-actions"><a class="primary-btn" href="https://www.minecraft.net/" target="_blank" rel="noopener">לפרטים נוספים <span>↗</span></a><button class="ghost-btn" data-fav="minecraft">♡ הוסף למועדפים</button></div></div><div class="hero-art" aria-hidden="true"><div class="pixel-sun"></div><div class="block block-one"></div><div class="block block-two"></div><div class="block block-three"></div><div class="block block-four"></div></div><div class="hero-index">01 <span>/ 04</span></div></section>
+        <div class="section-heading"><div><div class="eyebrow">DISCOVER</div><h2>מה בא לך לשחק?</h2></div><button class="text-link" data-view="games">לכל המשחקים <span>←</span></button></div>
+        <div class="filter-row" id="filters"><button class="filter active" data-filter="all">הכל</button><button class="filter" data-filter="games">משחקים</button><button class="filter" data-filter="apps">אפליקציות</button></div>
+        <div class="catalog-grid" id="catalog"></div>
+        <footer><span>RETZEF CLIENT <b>PREVIEW 0.2.0</b></span><span>נבנה בשביל הגיימרים ✦</span></footer>
+      </section>
+    </main>
+  </div>
+  <div class="modal-backdrop" id="modal" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" aria-label="סגור">×</button><div id="modalBody"></div></section></div>
+  <script src="/app.js" defer></script>
+</body></html>
