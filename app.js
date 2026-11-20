@@ -1,4 +1,4 @@
-const VERSION="2.0.0";
+const VERSION="5.50.50.50";
 const data=[
 {id:"lunar",name:"Lunar Client",kind:"client",tag:"Minecraft Client",sub:"Minecraft Java עם שיפורי ביצועים ותוספות",logo:"LC",logoBg:"#dce8f5",logoColor:"#263b56",platforms:["Windows","macOS"],url:"https://www.lunarclient.com/",compat:"Minecraft Java Edition",description:"Client מוכר ל-Minecraft Java עם ממשק משלו, תכונות PvP ואפשרויות התאמה. בדוק דרישות מערכת וגרסאות נתמכות באתר הרשמי.",featured:1},
 {id:"badlion",name:"Badlion Client",kind:"client",tag:"Minecraft Client",sub:"Client עם מודולים וכלי משחק",logo:"B",logoBg:"#e6e8eb",logoColor:"#343b45",platforms:["Windows","macOS"],url:"https://www.badlion.net/",compat:"Minecraft Java Edition",description:"Client ל-Minecraft Java עם מודולים, התאמות וכלי משחק. זמינות תכונות עשויה להשתנות בין גרסאות.",featured:2},
