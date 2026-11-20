@@ -1,6 +1,6 @@
 /* Retzef Client 2.0.0 — local-first feature layer */
 const V2_NEW_IDS=['atlauncher','gdlauncher','vscode','githubdesktop','chrome','firefox','telegram','spotify'];
-const v2Read=(key,fallback)=>{try{const value=JSON.parse(localStorage.getItem(key));return value??fallback}catch(e){return fallback}};
+const v2Read=(key,fallback)=>{try{const value=JSON.parse(localStorage.getItem(key));if(Array.isArray(fallback))return Array.isArray(value)?value:fallback;if(fallback&&typeof fallback==='object')return value&&typeof value==='object'&&!Array.isArray(value)?value:fallback;return value??fallback}catch(e){return fallback}};
 let v2Pinned=v2Read('retzef-client-pinned',[]);
 let v2Notes=v2Read('retzef-client-notes',{});
 let v2Tags=v2Read('retzef-client-tags',{});
@@ -32,7 +32,7 @@ const v2OriginalExport=exportBackup;
 exportBackup=function(){const original=Blob;window.Blob=class extends original{constructor(parts,opts){if(parts&&typeof parts[0]==='string'&&parts[0].includes('retzef-client-backup')){try{const obj=JSON.parse(parts[0]);Object.assign(obj,{pinned:v2Pinned,notes:v2Notes,tags:v2Tags,collections:v2Collections,usage:v2Usage,compactMode:v2Compact,reduceMotion:v2Motion});parts=[JSON.stringify(obj,null,2)]}catch(e){}}super(parts,opts)}};try{v2OriginalExport()}finally{window.Blob=original}};
 // Restore extended backup fields after the original importer has validated the file.
 const v2OriginalImport=importBackup;
-importBackup=function(file){if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const b=JSON.parse(reader.result);if(b.format==='retzef-client-backup'){v2Pinned=Array.isArray(b.pinned)?b.pinned.filter(id=>data.some(x=>x.id===id)).slice(0,100):[];v2Notes=b.notes&&typeof b.notes==='object'?b.notes:{};v2Tags=b.tags&&typeof b.tags==='object'?b.tags:{};v2Collections=Array.isArray(b.collections)?b.collections.filter(c=>c&&typeof c.name==='string'&&Array.isArray(c.items)).slice(0,30):[];v2Usage=b.usage&&typeof b.usage==='object'?b.usage:{}}}catch(e){}v2Persist();};reader.readAsText(file);v2OriginalImport(file)};
+importBackup=function(file){if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const b=JSON.parse(reader.result);if(b.format==='retzef-client-backup'){v2Pinned=Array.isArray(b.pinned)?b.pinned.slice(0,100):[];v2Notes=b.notes&&typeof b.notes==='object'?b.notes:{};v2Tags=b.tags&&typeof b.tags==='object'?b.tags:{};v2Collections=Array.isArray(b.collections)?b.collections.filter(c=>c&&typeof c.name==='string'&&Array.isArray(c.items)).slice(0,30):[];v2Usage=b.usage&&typeof b.usage==='object'?b.usage:{};v2Compact=!!b.compactMode;v2Motion=!!b.reduceMotion;localStorage.setItem('retzef-client-compact',v2Compact?'1':'0');localStorage.setItem('retzef-client-motion',v2Motion?'1':'0');document.body.classList.toggle('compact-mode',v2Compact);document.body.classList.toggle('reduce-motion',v2Motion)}}catch(e){}v2Persist();};reader.readAsText(file);v2OriginalImport(file)};
 // Add actions to the existing settings page after it is rendered.
 const v2OrigRenderForSettings=render;
 render=function(){v2OrigRenderForSettings();if(page==='settings')v2Settings()};
