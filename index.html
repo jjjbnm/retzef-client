@@ -1,45 +1,83 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#090d0a"><meta name="description" content="Retzef Client — הבית לכל הלקוחות, המשחקים והאפליקציות שלך.">
-<link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css">
-<title>Retzef Client — Your Gaming Hub</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090d0a">
+<meta name="description" content="Retzef Client 1.18.0 — מרכז הגיימינג שלך ל-Clients, Launchers, משחקים ואפליקציות.">
+<meta name="color-scheme" content="dark">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<title>Retzef Client 1.18.0</title>
 </head>
 <body>
 <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
 <div class="layout">
 <aside class="sidebar" id="sidebar">
-<a class="brand" href="#" data-page="home"><span class="brand-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 9h28v8H19v6h16v8H19v8h-9z" fill="currentColor"/><path d="M27 31h11v8H27z" fill="#0b100c"/></svg></span><span class="brand-name">RETZEF<span>CLIENT</span></span></a>
+<a class="brand" href="#" data-page="home"><span class="brand-icon"><svg viewBox="0 0 48 48"><path d="M10 9h28v8H19v6h16v8H19v8h-9z" fill="currentColor"/><path d="M27 31h11v8H27z" fill="#0b100c"/></svg></span><span class="brand-name">RETZEF<span>CLIENT</span></span></a>
 <div class="side-caption">WORKSPACE</div>
 <nav class="nav">
 <button class="nav-link active" data-page="home"><span class="nav-icon">⌂</span>סקירה כללית</button>
 <button class="nav-link" data-page="clients"><span class="nav-icon">▣</span>Clients ו-Launchers</button>
 <button class="nav-link" data-page="apps"><span class="nav-icon">▦</span>אפליקציות</button>
 <button class="nav-link" data-page="games"><span class="nav-icon">🎮</span>משחקים</button>
-<button class="nav-link" data-page="favorites"><span class="nav-icon">♡</span>המועדפים שלי</button>
+<button class="nav-link" data-page="favorites"><span class="nav-icon">♡</span>המועדפים שלי <span class="nav-count" id="favCount">0</span></button>
+<button class="nav-link" data-page="recent"><span class="nav-icon">◷</span>נצפו לאחרונה</button>
 </nav>
-<div class="side-caption side-caption-gap">YOUR LIBRARY <span class="count" id="favCount">0</span></div>
+<div class="side-caption side-caption-gap">YOUR LIBRARY</div>
 <div class="side-library" id="sideLibrary"><div class="library-empty">המועדפים שלך יופיעו כאן</div></div>
-<div class="sidebar-bottom"><button class="nav-link" data-page="settings"><span class="nav-icon">⚙</span>הגדרות</button><div class="user-card"><div class="user-logo">R</div><div><b>Retzef Client</b><small>Preview · 0.3.0</small></div><span class="status-dot"></span></div></div>
+<div class="sidebar-bottom">
+<button class="nav-link" data-page="settings"><span class="nav-icon">⚙</span>הגדרות</button>
+<div class="user-card"><div class="user-logo">R</div><div><b>Retzef Client</b><small>VERSION 1.18.0</small></div><span class="status-dot"></span></div>
+</div>
 </aside>
 <main class="main">
-<header class="topbar"><button class="mobile-menu" id="menuBtn">☰</button><div class="crumb"><span>RETZEF</span><i>/</i><b id="pageName">סקירה כללית</b></div><div class="top-right"><label class="searchbox"><span>⌕</span><input id="search" placeholder="חפש client, משחק או אפליקציה..." autocomplete="off"><kbd>⌘ K</kbd></label><button class="top-icon" id="installBtn" hidden title="התקן את Retzef Client">↓</button><div class="top-user">R</div></div></header>
+<header class="topbar">
+<button class="mobile-menu" id="menuBtn" aria-label="פתח תפריט">☰</button>
+<div class="crumb"><span>RETZEF</span><i>/</i><b id="pageName">סקירה כללית</b></div>
+<div class="top-right">
+<label class="searchbox"><span>⌕</span><input id="search" placeholder="חפש Client, משחק או אפליקציה..." autocomplete="off"><kbd>Ctrl K</kbd></label>
+<button class="top-icon" id="installBtn" hidden title="התקן את Retzef Client">↓</button>
+<button class="top-icon" id="themeBtn" title="שנה ערכת צבעים" aria-label="שנה ערכת צבעים">◐</button>
+<div class="top-user">R</div>
+</div>
+</header>
 <div class="page" id="page">
-<section class="hero">
+<section class="hero" id="hero">
 <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><div class="hero-grid"></div>
-<div class="hero-content"><div class="live-label"><i></i> YOUR ALL-IN-ONE GAMING HUB</div><h1>כל ה-Clients שלך.<br><span>במקום אחד.</span></h1><p>גלו Launchers, לקוחות משחקים ואפליקציות למחשב ולאנדרואיד — מסודרים בספרייה אחת.</p><div class="hero-buttons"><button class="btn-primary" data-page="clients">גלה Clients <span>←</span></button><button class="btn-secondary" data-page="apps">לכל האפליקציות</button></div><div class="hero-meta"><span>✦ נבחרים בקפידה</span><span>⌁ Windows + Android + Web</span></div></div>
+<div class="hero-content">
+<div class="live-label"><i></i> RETZEF CLIENT <span class="version-pill">V1.18.0</span></div>
+<h1>כל עולם הגיימינג שלך.<br><span>במקום אחד.</span></h1>
+<p>מגלים Clients, מנהלים את הספרייה, משווים תאימות ומגיעים למקורות הרשמיים — בממשק אחד.</p>
+<div class="hero-buttons"><button class="btn-primary" data-page="clients">גלה Clients <span>←</span></button><button class="btn-secondary" data-page="apps">לכל האפליקציות</button></div>
+<div class="hero-meta"><span>✦ ספרייה מסודרת</span><span>⌁ Windows · Android · Web ועוד</span></div>
+</div>
 <div class="hero-brand"><div class="hero-logo"><svg viewBox="0 0 120 120"><path d="M22 18h76v21H47v15h44v21H47v27H22z" fill="currentColor"/><path d="M68 75h30v27H68z" fill="#0a100b"/></svg></div><div class="hero-brand-caption">RETZEF CLIENT</div><div class="hero-brand-sub">PLAY YOUR WAY</div></div>
-<div class="hero-bottomline"><span>01 — DISCOVER</span><span>BUILT FOR YOUR SETUP</span></div>
+<div class="hero-bottomline"><span>01 — DISCOVER</span><span>VERSION 1.18.0 · THE BIG UPGRADE</span></div>
 </section>
-<section class="stats-row"><div class="stat"><b id="statClients">6</b><span>Clients ו-Launchers</span></div><div class="stat"><b id="statApps">5</b><span>אפליקציות</span></div><div class="stat"><b id="statPlatforms">4</b><span>פלטפורמות</span></div><div class="stat stat-note"><b>∞</b><span>הספרייה שלך, בדרך שלך</span></div></section>
-<section class="section" id="featuredSection"><div class="section-head"><div><div class="overline">HAND-PICKED FOR YOU</div><h2>התחלה מומלצת</h2><p>כמה מהכלים הבולטים בעולם ה-Clients.</p></div><button class="see-all" data-page="clients">לכל ה-Clients <span>←</span></button></div><div class="featured-grid" id="featured"></div></section>
-<section class="section"><div class="section-head compact"><div><div class="overline">EXPLORE LIBRARY</div><h2>הספרייה שלך</h2></div><div class="segmented"><button class="segment active" data-filter="all">הכל</button><button class="segment" data-filter="clients">Clients</button><button class="segment" data-filter="apps">אפליקציות</button><button class="segment" data-filter="games">משחקים</button></div></div><div class="catalog-grid" id="catalog"></div></section>
-<section class="callout"><div class="callout-symbol">✦</div><div><b>לא בטוחים במה לבחור?</b><p>פתחו כרטיס כדי לראות לאילו מערכות כל Client מתאים ומה הוא עושה.</p></div><button class="btn-secondary" data-page="clients">השוואת Clients</button></section>
-<footer><div class="footer-brand"><span class="footer-mark">R</span> RETZEF CLIENT</div><span>PREVIEW 0.3.0 · MADE FOR PLAY</span><span>קישורים לאתרים הרשמיים בלבד</span></footer>
+<section class="stats-row">
+<div class="stat"><b id="statClients">0</b><span>Clients ו-Launchers</span></div>
+<div class="stat"><b id="statApps">0</b><span>אפליקציות</span></div>
+<div class="stat"><b id="statGames">0</b><span>משחקים</span></div>
+<div class="stat"><b id="statPlatforms">0</b><span>פלטפורמות</span></div>
+</section>
+<section class="section" id="featuredSection">
+<div class="section-head"><div><div class="overline">HAND-PICKED FOR YOU</div><h2>בחירות מומלצות</h2><p>כלים שכדאי להכיר.</p></div><button class="see-all" data-page="clients">לכל ה-Clients <span>←</span></button></div>
+<div class="featured-grid" id="featured"></div>
+</section>
+<section class="section" id="librarySection">
+<div class="section-head library-heading"><div><div class="overline">EXPLORE LIBRARY</div><h2 id="catalogTitle">הספרייה שלך</h2><p id="resultCount">טוען פריטים...</p></div><div class="toolbar"><select id="platformFilter" aria-label="סינון לפי פלטפורמה"><option value="all">כל הפלטפורמות</option><option>Windows</option><option>Android</option><option>macOS</option><option>Linux</option><option>iOS</option><option>Web</option><option>Console</option></select><select id="sortSelect" aria-label="סידור פריטים"><option value="featured">מומלצים</option><option value="az">שם א׳-ת׳</option><option value="za">שם ת׳-א׳</option></select></div></div>
+<div class="category-tabs" id="categoryTabs"><button class="segment active" data-filter="all">הכל</button><button class="segment" data-filter="clients">Clients</button><button class="segment" data-filter="apps">אפליקציות</button><button class="segment" data-filter="games">משחקים</button></div>
+<div class="catalog-grid" id="catalog"></div>
+</section>
+<section class="callout" id="compareCallout"><div class="callout-symbol">⇄</div><div><b>השוואת Clients</b><p>בחר עד 3 פריטים באמצעות כפתור ההשוואה בכרטיסים.</p></div><button class="btn-secondary" id="compareBtn" disabled>השווה (<span id="compareCount">0</span>)</button></section>
+<section class="release-panel"><div><div class="overline">WHAT'S NEW</div><h2>Retzef Client 1.18.0</h2><p>קפיצה גדולה מגרסת 1.0.0 — חיפוש מתקדם, סינון, השוואה, היסטוריה, מועדפים משופרים וחוויית מובייל חדשה.</p></div><span class="release-mark">1.18</span></section>
+<footer><div class="footer-brand"><span class="footer-mark">R</span> RETZEF CLIENT</div><span>VERSION 1.18.0 · MADE FOR PLAY</span><span>קישורים לאתרים הרשמיים בלבד</span></footer>
 </div>
 </main>
 </div>
-<div class="overlay" id="overlay" hidden><section class="dialog"><button class="dialog-close" id="closeDialog">×</button><div id="dialogContent"></div></section></div>
+<div class="overlay" id="overlay" hidden><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><button class="dialog-close" id="closeDialog" aria-label="סגור">×</button><div id="dialogContent"></div></section></div>
+<div class="toast-region" id="toastRegion" aria-live="polite"></div>
 <script src="/app.js" defer></script>
 </body></html>

@@ -1,24 +1,36 @@
-# Retzef Client — Preview 0.3.0
+# Retzef Client 1.18.0
 
-Xbox-inspired discovery hub for game clients, launchers, games and companion apps.
+Xbox-inspired, Hebrew RTL discovery hub for game clients, launchers, games and companion apps.
 
-## Features
-- Hebrew RTL responsive interface for desktop and mobile
-- Retzef Client custom SVG identity and visual system
-- Searchable library with categories for Clients, Launchers, Apps and Games
-- Compatibility labels for Windows, macOS, Linux, Android, iOS, Console and Web
-- Detail panels with compatibility notes and official developer links
-- Local favorites, PWA install support and offline shell caching
+## Version
+- Previous baseline: 1.0.0
+- Current release: **1.18.0**
+- Release type: major feature milestone (18th minor feature line)
 
-## Curated catalog
-Minecraft Java clients and launchers: Lunar Client, Badlion Client, Feather Client, Prism Launcher, Modrinth App and CurseForge.
-Apps: Discord, Steam, Roblox and Xbox.
+## What's new in 1.18.0
+- Rebuilt responsive dashboard with a clearer library-first layout.
+- Expanded curated catalog with OBS Studio, VLC and Epic Games Launcher.
+- Live search across names, categories, platforms and compatibility notes.
+- Filter by product category and platform.
+- Sort alphabetically or by featured order.
+- Compare up to three catalog entries side-by-side.
+- Favorites with persistent local storage.
+- Recently viewed list stored locally.
+- Light/dark appearance toggle.
+- Dedicated settings and privacy information.
+- Improved keyboard navigation, focus states, dialogs and mobile navigation.
+- Updated PWA service-worker cache to v1.18.0.
+- Dynamic catalog statistics and release panel.
+
+## Catalog
+Minecraft Java clients and launchers: Lunar Client, Badlion Client, Feather Client, Prism Launcher, Modrinth App, CurseForge and Epic Games Launcher.
+Apps: Discord, Steam, Roblox, Xbox, OBS Studio and VLC.
 Games: Minecraft and Brawl Stars.
 
-Compatibility is informational and may change by app version. Check the official developer website for current system requirements.
-
 ## Run
-Serve this directory as a static website or deploy to Vercel. No build step is required.
+Serve this directory as a static website or deploy to Vercel. No build step or package installation is required.
 
-## Safety and privacy
-Retzef Client is a discovery hub. It does not collect passwords, ask for third-party credentials, patch apps, or install third-party software. All external links go to official developer websites.
+## Privacy and safety
+Retzef Client is a discovery hub. It does not collect passwords, request third-party credentials, patch apps, or install third-party software. Favorites, recent items and theme preference are stored in the browser's local storage. External links point to developer websites.
+
+Compatibility is informational and may change by app version. Check the official developer website for current system requirements. Retzef Client is an independent project and is not officially affiliated with listed brands.

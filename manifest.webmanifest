@@ -1,1 +1,13 @@
-{"name":"Retzef Client","short_name":"Retzef","start_url":"/","display":"standalone","background_color":"#0c100d","theme_color":"#101510","description":"Your games and apps in one place.","icons":[{"src":"/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+{
+  "name": "Retzef Client",
+  "short_name": "Retzef",
+  "description": "Your gaming clients, launchers, apps and games in one place.",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#090d0a",
+  "theme_color": "#090d0a",
+  "orientation": "any"
+}
