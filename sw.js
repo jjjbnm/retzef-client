@@ -1,4 +1,4 @@
-const CACHE="retzef-client-v5505050-ui-refresh";
+const CACHE="retzef-client-studio-rebuild-1";
 const CORE=["/","/index.html","/styles.css","/app.js","/v2.js","/v5.js","/manifest.webmanifest","/favicon.svg"];
 self.addEventListener("install",event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())));
 self.addEventListener("activate",event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
