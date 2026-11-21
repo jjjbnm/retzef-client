@@ -1,40 +1,23 @@
-# Retzef Client 5.50.50.50
+# Retzef Client 6.0.0
 
-Xbox-inspired Hebrew RTL gaming discovery hub for clients, launchers, apps and games. Static PWA; no build step required.
+Retzef Client is a Hebrew RTL workspace for original Retzef client projects, apps and games.
 
-## 5.50.50.50 release additions
-- Dedicated Release Center with version information and a local system diagnostic panel.
-- Quick Launch shelf built from the user's existing pinned and favorite library items.
-- Keyboard shortcuts: Ctrl/⌘+Shift+L for Quick Launch, Ctrl/⌘+Shift+U for Release Center, and Ctrl/⌘+K to focus search.
-- Focus mode to reduce visual distractions and motion; its preference is restored after refresh.
-- Mobile-friendly Release Center and Quick Launch shelf.
-- Updated PWA cache version and precache list.
+## Design
+- Dark industrial studio visual language
+- Warm orange accent, editorial typography and compact navigation
+- Responsive layout for desktop and mobile
+- Optional light theme
 
-## Existing features retained
-- Search, filters, sorting, comparison, favorites and recent history.
-- Personal notes, tags, pinned items, custom collections and custom HTTPS shortcuts.
-- Bulk selection, CSV export, JSON backup/restore, compact mode and accent colors.
-- Official-site links for catalog entries.
+## Features
+- Original project cards: Retzef Discord, Retzef Minecraft, Retzef Roblox
+- Create personal project cards
+- Search and filter the library
+- Favorites and recent items stored locally
+- Export local workspace backup
+- Responsive navigation and keyboard search shortcut (Ctrl/⌘ + K)
 
-## Upgrade target
-The project roadmap target is 1,000 cumulative fixes and features, delivered in verified batches. This release documents only the additions implemented in this batch; it does not claim that 1,000 changes have already shipped.
-
-## Privacy
-Personal notes, tags, collections, favorites, pins, shortcuts and preferences are stored in local browser storage. The Release Center's diagnostics read local browser state only and do not upload it. No third-party passwords or credentials are requested. Retzef Client does not patch apps or install third-party software.
+## Important
+Project cards are planning/workspace entries, not claims that the clients are already implemented. Official third-party app links open their original publishers. No third-party client software is bundled.
 
 ## Run
-Serve this directory as a static website or deploy it to Vercel.
-
-## 5.50.50.50 bug-fix batch
-- Fixed focus-mode preference restoration after reload.
-- Implemented the advertised Ctrl/⌘+K search shortcut.
-- Corrected the release-panel text so it describes this release rather than repeating 2.0.0 feature counts.
-
-
-## Custom Clients hub
-
-Retzef Client is a discovery and local management hub for existing third-party clients. The directory includes Discord-related clients/modifications (Vesktop, Vencord, BetterDiscord) and Minecraft Java clients (Lunar, Badlion, Feather, Laby Client). Entries link to project-controlled official sources; compatibility and terms may change. Discord client modifications may conflict with Discord's Terms of Service.
-
-The app can save favorites and a local "My Clients" list. Marking an item as installed is only a local checklist and does not install or launch native software. Native installation and launching are handled by the original app/installer. A browser/PWA cannot silently install or execute arbitrary desktop/mobile applications.
-
-The directory is filtered by target app (Discord / Minecraft) and platform. The responsive layout has additional small-screen adjustments.
+Static site. Open index.html or deploy to Vercel.

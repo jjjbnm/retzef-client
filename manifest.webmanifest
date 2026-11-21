@@ -1,17 +1,1 @@
-{
-  "name": "Retzef Client",
-  "short_name": "Retzef",
-  "description": "Retzef Client 2.0.0 — 33 fixes and 22 new features for your gaming library.",
-  "lang": "he",
-  "dir": "rtl",
-  "start_url": "/",
-  "scope": "/",
-  "display": "standalone",
-  "background_color": "#090d0a",
-  "theme_color": "#090d0a",
-  "orientation": "any",
-  "categories": [
-    "games",
-    "utilities"
-  ]
-}
+{"name":"Retzef Client","short_name":"Retzef","start_url":"/","display":"standalone","background_color":"#101113","theme_color":"#101113","lang":"he","dir":"rtl","icons":[{"src":"/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}

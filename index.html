@@ -3,92 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5f5f8">
-<meta name="description" content="Retzef Client 5.50.50.50 — הבית של Retzef Clients מקוריים, אפליקציות ומשחקים.">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#101113">
+<meta name="description" content="Retzef Client — סביבת העבודה לפרויקטים מקוריים של Retzef.">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/styles.css">
-<title>Retzef Client 5.50.50.50</title>
+<title>Retzef Client — Workspace</title>
 </head>
 <body>
-<div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
-<div class="layout">
+<div class="app-shell">
 <aside class="sidebar" id="sidebar">
-<a class="brand" href="#" data-page="home"><span class="brand-icon"><svg viewBox="0 0 48 48"><path d="M10 9h28v8H19v6h16v8H19v8h-9z" fill="currentColor"/><path d="M27 31h11v8H27z" fill="#0b100c"/></svg></span><span class="brand-name">RETZEF<span>CLIENT</span></span></a>
-<div class="side-caption">WORKSPACE</div>
+<a class="brand" href="#" data-page="home"><span class="brand-symbol">R<span>.</span></span><span class="brand-copy"><b>RETZEF</b><small>CLIENT WORKSPACE</small></span></a>
+<div class="side-label">WORKSPACE</div>
 <nav class="nav">
-<button class="nav-link active" data-page="home"><span class="nav-icon">⌂</span>סקירה כללית</button>
-<button class="nav-link" data-page="clients"><span class="nav-icon">▣</span>Custom Clients</button>
-<button class="nav-link" data-page="apps"><span class="nav-icon">▦</span>אפליקציות</button>
-<button class="nav-link" data-page="games"><span class="nav-icon">🎮</span>משחקים</button>
-<button class="nav-link" data-page="favorites"><span class="nav-icon">♡</span>המועדפים שלי <span class="nav-count" id="favCount">0</span></button>
-<button class="nav-link" data-page="recent"><span class="nav-icon">◷</span>נצפו לאחרונה</button>
-<button class="nav-link" data-page="pinned"><span class="nav-icon">⌖</span>פריטים נעוצים</button>
-<button class="nav-link" data-page="collections"><span class="nav-icon">▤</span>האוספים שלי</button>
-<button class="nav-link" data-page="new"><span class="nav-icon">✦</span>נוספו לאחרונה</button>
-<button class="nav-link" data-page="myApps"><span class="nav-icon">＋</span>קיצורי הדרך שלי</button>
-<button class="nav-link" data-page="installed"><span class="nav-icon">✓</span>ה-Clients שלי</button>
+<button class="nav-item active" data-page="home"><span>⌂</span>סקירה כללית</button>
+<button class="nav-item" data-page="projects"><span>▦</span>הפרויקטים שלי</button>
+<button class="nav-item" data-page="apps"><span>▣</span>אפליקציות</button>
+<button class="nav-item" data-page="games"><span>◈</span>משחקים</button>
+<button class="nav-item" data-page="favorites"><span>☆</span>מועדפים <i id="favCount">0</i></button>
+<button class="nav-item" data-page="recent"><span>◷</span>אחרונים</button>
 </nav>
-<div class="side-caption side-caption-gap">YOUR LIBRARY</div>
-<div class="side-library" id="sideLibrary"><div class="library-empty">המועדפים שלך יופיעו כאן</div></div>
 <div class="sidebar-bottom">
-<button class="nav-link" data-page="settings"><span class="nav-icon">⚙</span>הגדרות</button>
-<div class="user-card"><div class="user-logo">R</div><div><b>Retzef Client</b><small>VERSION 5.50.50.50</small></div><span class="status-dot"></span></div>
+<div class="side-label">PREFERENCES</div>
+<button class="nav-item" data-page="settings"><span>⚙</span>הגדרות</button>
+<div class="workspace-card"><div class="workspace-avatar">R</div><div><b>Retzef Workspace</b><small>PERSONAL SPACE</small></div><span class="online-dot"></span></div>
 </div>
 </aside>
 <main class="main">
 <header class="topbar">
 <button class="mobile-menu" id="menuBtn" aria-label="פתח תפריט">☰</button>
-<div class="crumb"><span>RETZEF</span><i>/</i><b id="pageName">סקירה כללית</b></div>
-<div class="top-right">
-<label class="searchbox"><span>⌕</span><input id="search" placeholder="חפש Custom Client או אפליקציה..." autocomplete="off"><kbd>Ctrl K</kbd></label>
-<button class="top-icon" id="commandBtn" title="מרכז פקודות (Ctrl+Shift+P)" aria-label="מרכז פקודות">⌘</button>
-<button class="top-icon" id="randomBtn" title="הפתעה אקראית" aria-label="בחר פריט אקראי">🎲</button>
-<button class="top-icon" id="addCustomBtn" title="הוסף קיצור דרך" aria-label="הוסף קיצור דרך">＋</button>
-<button class="top-icon" id="installBtn" hidden title="התקן את Retzef Client">↓</button>
-<button class="top-icon" id="themeBtn" title="שנה ערכת צבעים" aria-label="שנה ערכת צבעים">◐</button>
-<div class="top-user">R</div>
+<div class="breadcrumb"><span>RETZEF</span><b>/</b><strong id="pageTitle">סקירה כללית</strong></div>
+<div class="top-actions">
+<label class="search"><span>⌕</span><input id="search" placeholder="חיפוש בפרויקטים..." autocomplete="off"><kbd>Ctrl K</kbd></label>
+<button class="icon-btn" id="themeBtn" title="שינוי ערכת נושא">◐</button>
+<button class="avatar">R</button>
 </div>
 </header>
-<div class="page" id="page">
-<section class="hero" id="hero">
-<div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><div class="hero-grid"></div>
-<div class="hero-content">
-<div class="live-label"><i></i> RETZEF CLIENT <span class="version-pill">V5.50.50.50</span></div>
-<h1>ה־Clients שלנו.<br><span>נבנים מאפס.</span></h1>
-<p>מקום אחד לפרויקטים המקוריים של Retzef, לאפליקציות ולמשחקים. אנחנו בונים את הלקוחות שלנו בעצמנו.</p>
-<div class="hero-buttons"><button class="btn-primary" data-page="clients">גלה את הפרויקטים <span>←</span></button><button class="btn-secondary" data-page="apps">לכל האפליקציות</button></div>
-<div class="hero-meta"><span>✦ ספרייה מסודרת</span><span>⌁ Windows · Android · Web ועוד</span></div>
+<div class="content" id="content">
+<section class="welcome">
+<div class="welcome-copy">
+<div class="eyebrow"><span class="pulse"></span> YOUR CREATIVE WORKSPACE</div>
+<h1>בונים דברים.<br><em>בדרך שלנו.</em></h1>
+<p>כל הפרויקטים המקוריים של Retzef במקום אחד. יוצרים Clients, מפתחים רעיונות ומתקדמים משלב התכנון למוצר אמיתי.</p>
+<div class="welcome-actions"><button class="button button-primary" id="createBtn">＋ יצירת פרויקט</button><button class="button button-ghost" data-page="projects">לכל הפרויקטים <span>←</span></button></div>
 </div>
-<div class="hero-brand"><div class="hero-logo"><svg viewBox="0 0 120 120"><path d="M22 18h76v21H47v15h44v21H47v27H22z" fill="currentColor"/><path d="M68 75h30v27H68z" fill="#0a100b"/></svg></div><div class="hero-brand-caption">RETZEF CLIENT</div><div class="hero-brand-sub">PLAY YOUR WAY</div></div>
-<div class="hero-bottomline"><span>02 — LEVEL UP</span><span>VERSION 5.50.50.50 · THE POWER UPDATE</span></div>
+<div class="welcome-art" aria-hidden="true"><div class="art-ring ring-a"></div><div class="art-ring ring-b"></div><div class="art-core">R<span>.</span></div><div class="art-caption">MAKE IT YOURS / 001</div></div>
+<div class="welcome-foot"><span>RETZEF CLIENT</span><span>INDEPENDENT BUILDS · V6.0.0</span></div>
 </section>
-<section class="stats-row">
-<div class="stat"><b id="statClients">0</b><span>Custom Clients</span></div>
-<div class="stat"><b id="statApps">0</b><span>אפליקציות</span></div>
-<div class="stat"><b id="statGames">0</b><span>משחקים</span></div>
-<div class="stat"><b id="statPlatforms">0</b><span>פלטפורמות</span></div>
+<section class="metrics" id="metrics">
+<div class="metric"><small>PROJECTS</small><b id="projectCount">03</b><span>פרויקטים במרחב</span></div>
+<div class="metric"><small>IN PROGRESS</small><b id="progressCount">03</b><span>בתכנון או בפיתוח</span></div>
+<div class="metric"><small>FAVORITES</small><b id="favoriteMetric">00</b><span>פריטים שמורים</span></div>
+<div class="metric metric-note"><small>YOUR SPACE</small><b>∞</b><span>מקום לרעיונות הבאים</span></div>
 </section>
 <section class="section" id="featuredSection">
-<div class="section-head"><div><div class="overline">HAND-PICKED FOR YOU</div><h2>בחירות מומלצות</h2><p>הפרויקטים המקוריים שלנו מתחילים כאן.</p></div><button class="see-all" data-page="clients">לכל ה-Clients <span>←</span></button></div>
-<div class="featured-grid" id="featured"></div>
+<div class="section-heading"><div><div class="eyebrow muted">START HERE</div><h2>הפרויקטים שלנו</h2><p>Clients מקוריים שנבנים על ידי Retzef.</p></div><button class="text-button" data-page="projects">הצג הכול ←</button></div>
+<div class="project-grid" id="projectGrid"></div>
 </section>
 <section class="section" id="librarySection">
-<div class="section-head library-heading"><div><div class="overline">EXPLORE LIBRARY</div><h2 id="catalogTitle">הספרייה שלך</h2><p id="resultCount">טוען פריטים...</p></div><div class="toolbar"><select id="clientAppFilter" aria-label="סינון לפי אפליקציה" hidden><option value="all">כל האפליקציות</option><option value="Discord">Discord</option><option value="Minecraft">Minecraft</option></select><select id="platformFilter" aria-label="סינון לפי פלטפורמה"><option value="all">כל הפלטפורמות</option><option>Windows</option><option>Android</option><option>macOS</option><option>Linux</option><option>iOS</option><option>Web</option><option>Console</option></select><select id="sortSelect" aria-label="סידור פריטים"><option value="featured">מומלצים</option><option value="az">שם א׳-ת׳</option><option value="za">שם ת׳-א׳</option></select><button class="view-toggle" id="viewToggle" title="שנה תצוגה" aria-label="שנה תצוגה">▤</button></div></div>
-<div class="category-tabs" id="categoryTabs"><button class="segment active" data-filter="all">הכל</button><button class="segment" data-filter="clients">Clients</button><button class="segment" data-filter="apps">אפליקציות</button><button class="segment" data-filter="games">משחקים</button></div>
-<div class="catalog-grid" id="catalog"></div>
+<div class="section-heading"><div><div class="eyebrow muted">EXPLORE</div><h2 id="listHeading">הספרייה</h2><p id="listSub">אפליקציות, משחקים וקיצורי דרך ששייכים לסביבת העבודה.</p></div>
+<div class="filters"><select id="typeFilter" aria-label="סינון לפי סוג"><option value="all">הכול</option><option value="client">Clients</option><option value="app">אפליקציות</option><option value="game">משחקים</option></select><select id="sortFilter" aria-label="מיון"><option value="featured">מומלצים</option><option value="az">שם א׳–ת׳</option></select></div></div>
+<div class="library-grid" id="libraryGrid"></div>
 </section>
-<section class="callout" id="compareCallout"><div class="callout-symbol">⇄</div><div><b>השוואת Clients</b><p>בחר עד 3 פריטים באמצעות כפתור ההשוואה בכרטיסים.</p></div><button class="btn-secondary" id="compareBtn" disabled>השווה (<span id="compareCount">0</span>)</button></section>
-<section class="release-panel"><div><div class="overline">WHAT'S NEW</div><h2>Retzef Client 5.50.50.50</h2><p>מרכז עדכונים חדש, גישה מהירה למועדפים ולפריטים נעוצים, בדיקת מערכת מקומית, מצב ריכוז וקיצורי מקלדת. שיפורים נוספים יגיעו בעדכונים הבאים.</p></div><span class="release-mark">5.50.50.50</span></section>
-<footer><div class="footer-brand"><span class="footer-mark">R</span> RETZEF CLIENT</div><span>VERSION 5.50.50.50 · MADE FOR PLAY</span><span>קישורים לאתרים הרשמיים בלבד</span></footer>
+<footer><span class="footer-brand">RETZEF<span>.</span></span><span>BUILT WITH PURPOSE.</span><span>VERSION 6.0.0</span></footer>
 </div>
 </main>
 </div>
-<div class="overlay" id="overlay" hidden><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><button class="dialog-close" id="closeDialog" aria-label="סגור">×</button><div id="dialogContent"></div></section></div>
-<input type="file" id="importFile" accept="application/json,.json" hidden>
-<div class="toast-region" id="toastRegion" aria-live="polite"></div>
+<div class="modal-backdrop" id="modal" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" aria-label="סגירה">×</button><div id="modalBody"></div></section></div>
+<div class="toast-stack" id="toasts" aria-live="polite"></div>
 <script src="/app.js" defer></script>
-<script src="/v2.js" defer></script>
-<script src="/v5.js" defer></script>
-</body></html>
+</body>
+</html>
