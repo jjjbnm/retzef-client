@@ -1,21 +1,2 @@
-const crypto = require('crypto');
-const OWNER_EMAIL = 'helpme9284772@gmail.com';
-function sign(value, secret) { return crypto.createHmac('sha256', secret).update(value).digest('base64url'); }
-function safeEqual(a, b) { const aa = Buffer.from(a || ''); const bb = Buffer.from(b || ''); return aa.length === bb.length && crypto.timingSafeEqual(aa, bb); }
-module.exports = function handler(req, res) {
-  res.setHeader('Cache-Control', 'no-store, max-age=0');
-  res.setHeader('Pragma', 'no-cache');
-  if (req.method !== 'GET') return res.status(405).json({ authenticated: false });
-  const secret = process.env.SESSION_SECRET;
-  const raw = (req.headers.cookie || '').split(';').map(v => v.trim()).find(v => v.startsWith('retzef_session='));
-  if (!secret || !raw) return res.status(200).json({ authenticated: false, isOwner: false });
-  try {
-    const value = decodeURIComponent(raw.slice('retzef_session='.length));
-    const dot = value.lastIndexOf('.'); const payload = value.slice(0, dot); const signature = value.slice(dot + 1);
-    if (!payload || !safeEqual(signature, sign(payload, secret))) return res.status(200).json({ authenticated: false, isOwner: false });
-    const user = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
-    if (!user.email || user.exp < Date.now()) return res.status(200).json({ authenticated: false, isOwner: false });
-    const isOwner = user.email.toLowerCase() === OWNER_EMAIL;
-    return res.status(200).json({ authenticated: true, isOwner, user: { email: user.email, name: user.name, picture: user.picture } });
-  } catch (e) { return res.status(200).json({ authenticated: false, isOwner: false }); }
-};
+const {getUser,isOwner}=require('../_lib/auth');
+module.exports=function handler(req,res){res.setHeader('Cache-Control','no-store, max-age=0');res.setHeader('Pragma','no-cache');if(req.method!=='GET')return res.status(405).json({authenticated:false});const user=getUser(req);if(!user)return res.status(200).json({authenticated:false,isOwner:false});return res.status(200).json({authenticated:true,isOwner:isOwner(user),user:{id:user.id,username:user.username,name:user.name,avatar:user.avatar}});};

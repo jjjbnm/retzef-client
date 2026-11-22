@@ -88,10 +88,10 @@ footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
 <section class="panel" id="myBotsPanel" role="tabpanel" aria-labelledby="myBotsTab" hidden>
 <div class="signin-card">
 <h2>My bots/Add bot</h2>
-<p>Sign in with your Google account to manage your bots and submit a bot for review.</p>
-<p id="authStatus" role="status" aria-live="polite" class="auth-status">Sign in with Google to manage your bots.</p>
-<button class="google-button" id="googleSignIn" type="button"><span aria-hidden="true">G</span> Login with Google to continue</button>
-<button class="tab" id="googleSignOut" type="button" hidden>Sign out</button>
+<p>Sign in with your Discord account to manage your bots and submit a bot for review.</p>
+<p id="authStatus" role="status" aria-live="polite" class="auth-status">Sign in with Discord to manage your bots.</p>
+<button class="google-button" id="discordSignIn" type="button"><span aria-hidden="true">◉</span> Login with Discord to continue</button>
+<button class="tab" id="discordSignOut" type="button" hidden>Sign out</button>
 <div id="myBotsActions" hidden><h3>Your submitted bots</h3><div id="myBotsList" class="bot-list" aria-live="polite">Loading your bots…</div><button class="google-button" id="openAddBot" type="button">+ Add bot</button></div>
 <form id="addBotForm" class="signin-card" hidden>
 <h2>Add a Discord bot</h2>
@@ -135,8 +135,8 @@ botsTab.addEventListener('click',()=>selectTab('bots'));
 myBotsTab.addEventListener('click',()=>selectTab('mybots'));
 pendingTab.addEventListener('click',()=>selectTab('pending'));
 document.getElementById('addYourBot').addEventListener('click',event=>{event.preventDefault();selectTab('mybots');});
-const googleSignIn=document.getElementById('googleSignIn');
-const googleSignOut=document.getElementById('googleSignOut');
+const discordSignIn=document.getElementById('discordSignIn');
+const discordSignOut=document.getElementById('discordSignOut');
 const authStatus=document.getElementById('authStatus');
 const myBotsActions=document.getElementById('myBotsActions');
 const addBotForm=document.getElementById('addBotForm');
@@ -157,22 +157,22 @@ async function loadMyBots(){const host=document.getElementById('myBotsList');if(
 function renderPending(requests){const host=document.getElementById('pendingRequests');host.innerHTML='';if(!requests.length){host.textContent='No pending requests.';return;}requests.forEach(item=>{const card=document.createElement('article');card.className='bot-card';const content=document.createElement('div');content.className='bot-content';const h=document.createElement('h2');h.textContent=item.name;const p=document.createElement('p');p.className='description';p.textContent=item.description;const meta=document.createElement('p');meta.className='auth-status';meta.textContent='Submitted by '+item.submittedBy.email+' · '+new Date(item.createdAt).toLocaleString();content.append(h,p,meta);addDetailMedia(content,item);addDetailLinks(content,item);const actions=document.createElement('div');actions.className='actions';for(const action of ['approve','reject']){const b=document.createElement('button');b.className='tab';b.type='button';b.textContent=action==='approve'?'Approve':'Reject';b.addEventListener('click',async()=>{b.disabled=true;try{const r=await fetch('/api/bots/review',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:item.id,action})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Review failed');await loadPending();if(action==='approve')await loadApprovedBots();}catch(e){b.disabled=false;alert(e.message);}});actions.append(b);}content.append(actions);card.append(content);host.append(card);});}
 async function loadPending(){const host=document.getElementById('pendingRequests');host.textContent='Loading requests…';try{const r=await fetch('/api/bots/pending',{credentials:'same-origin',cache:'no-store'});const d=await r.json();if(!r.ok)throw new Error(d.error||'Could not load requests.');renderPending(d.requests||[]);}catch(e){host.textContent=e.message;}}
 
-googleSignIn.addEventListener('click',()=>{window.location.assign('/api/auth/google');});
-googleSignOut.addEventListener('click',async()=>{await fetch('/api/auth/logout',{method:'POST',cache:'no-store'});window.location.assign('/');});
+discordSignIn.addEventListener('click',()=>{window.location.assign('/api/auth/discord');});
+discordSignOut.addEventListener('click',async()=>{await fetch('/api/auth/logout',{method:'POST',cache:'no-store'});window.location.assign('/');});
 (async()=>{
   try {
     const response=await fetch('/api/auth/me?check='+Date.now(),{credentials:'same-origin',cache:'no-store'});
     const data=await response.json();
     if(data.authenticated){
-      authStatus.textContent='Signed in as '+data.user.email;
-      googleSignIn.hidden=true; googleSignOut.hidden=false; myBotsActions.hidden=false;loadMyBots();
+      authStatus.textContent='Signed in as @'+data.user.username;
+      discordSignIn.hidden=true; discordSignOut.hidden=false; myBotsActions.hidden=false;loadMyBots();
       if(data.isOwner===true){pendingTab.hidden=false;currentIsOwner=true;loadPending();}
       if(new URLSearchParams(location.search).get('login')==='success') selectTab('mybots');
       else if(location.hash==='#pending-requests' && data.isOwner===true) selectTab('pending');
     } else {
       pendingTab.hidden=true; myBotsActions.hidden=true; addBotForm.hidden=true;
-      if(new URLSearchParams(location.search).has('login_error')) authStatus.textContent='Google sign-in could not be completed. Please try again.';
-      else authStatus.textContent='Sign in with Google to manage your bots.';
+      if(new URLSearchParams(location.search).has('login_error')) authStatus.textContent='Discord sign-in could not be completed. Please try again.';
+      else authStatus.textContent='Sign in with Discord to manage your bots.';
     }
   } catch(e) { authStatus.textContent='Sign-in status is temporarily unavailable. Please refresh.'; }
 })();
