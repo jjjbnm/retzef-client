@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="he" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -61,7 +61,7 @@ footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
 </header>
 <nav class="tabs" aria-label="Main navigation" role="tablist">
 <button class="tab" id="botsTab" type="button" role="tab" aria-selected="true" aria-controls="botsPanel">Bots</button>
-<button class="tab" id="myBotsTab" type="button" role="tab" aria-selected="false" aria-controls="myBotsPanel">הבוטים שלי / הוספת בוט</button>
+<button class="tab" id="myBotsTab" type="button" role="tab" aria-selected="false" aria-controls="myBotsPanel">My bots/Add bot</button>
 <button class="tab" id="pendingTab" type="button" role="tab" aria-selected="false" aria-controls="pendingPanel" hidden>Pending requests</button>
 </nav>
 <section class="panel" id="botsPanel" role="tabpanel" aria-labelledby="botsTab">
@@ -87,22 +87,22 @@ footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
 </section>
 <section class="panel" id="myBotsPanel" role="tabpanel" aria-labelledby="myBotsTab" hidden>
 <div class="signin-card">
-<h2>הבוטים שלי / הוספת בוט</h2>
+<h2>My bots/Add bot</h2>
 <p>Sign in with your Google account to manage your bots and submit a bot for review.</p>
-<p id="authStatus" role="status" aria-live="polite" class="auth-status">יש להתחבר עם Google כדי לנהל את הבוטים שלכם.</p>
-<button class="google-button" id="googleSignIn" type="button"><span aria-hidden="true">G</span> התחברות באמצעות Google להמשך</button>
-<button class="tab" id="googleSignOut" type="button" hidden>התנתקות</button>
-<div id="myBotsActions" hidden><button class="google-button" id="openAddBot" type="button">+ הוספת בוט</button></div>
+<p id="authStatus" role="status" aria-live="polite" class="auth-status">Sign in with Google to manage your bots.</p>
+<button class="google-button" id="googleSignIn" type="button"><span aria-hidden="true">G</span> Login with Google to continue</button>
+<button class="tab" id="googleSignOut" type="button" hidden>Sign out</button>
+<div id="myBotsActions" hidden><button class="google-button" id="openAddBot" type="button">+ Add bot</button></div>
 <form id="addBotForm" class="signin-card" hidden>
-<h2>הוספת בוט ל־Discord</h2>
-<label class="form-label" for="botName">שם הבוט</label><input class="form-input" id="botName" name="botName" maxlength="60" required placeholder="הקלידו את שם הבוט">
-<label class="form-label" for="botDescription">תיאור הבוט</label><textarea class="form-input" id="botDescription" name="botDescription" maxlength="500" rows="4" required placeholder="תארו מה הבוט שלכם עושה"></textarea>
-<label class="form-label" for="botLogo">לוגו הבוט</label><input class="form-input" id="botLogo" name="botLogo" type="file" accept="image/*" required>
-<label class="form-label" for="botBanner">תמונת באנר</label><input class="form-input" id="botBanner" name="botBanner" type="file" accept="image/*">
-<div class="form-heading"><strong>קישורים של הבוט</strong><span class="auth-status">יש להוסיף לפחות 3 קישורים.</span></div>
+<h2>Add a Discord bot</h2>
+<label class="form-label" for="botName">Bot name</label><input class="form-input" id="botName" name="botName" maxlength="60" required placeholder="הקלידו את Bot name">
+<label class="form-label" for="botDescription">Bot description</label><textarea class="form-input" id="botDescription" name="botDescription" maxlength="500" rows="4" required placeholder="Describe what your bot does"></textarea>
+<label class="form-label" for="botLogo">Bot logo</label><input class="form-input" id="botLogo" name="botLogo" type="file" accept="image/*" required>
+<label class="form-label" for="botBanner">Bot banner</label><input class="form-input" id="botBanner" name="botBanner" type="file" accept="image/*">
+<div class="form-heading"><strong>Bot links</strong><span class="auth-status">At least 3 links are required.</span></div>
 <div id="botLinks"></div>
-<button class="tab" id="addBotLink" type="button">+ הוספת כפתור</button>
-<button class="google-button" type="submit">שליחה לבדיקה</button>
+<button class="tab" id="addBotLink" type="button">+ Add button</button>
+<button class="google-button" type="submit">Send for review</button>
 <p id="submitStatus" class="auth-status" role="status" aria-live="polite"></p>
 </form>
 </div>
@@ -141,11 +141,11 @@ const authStatus=document.getElementById('authStatus');
 const myBotsActions=document.getElementById('myBotsActions');
 const addBotForm=document.getElementById('addBotForm');
 const botLinks=document.getElementById('botLinks');
-function addLinkRow(){const row=document.createElement('div');row.className='link-row';row.innerHTML='<input class="form-input" name="linkName" maxlength="30" required placeholder="שם הכפתור"><input class="form-input" name="linkUrl" type="url" required placeholder="https://example.com">';botLinks.appendChild(row);}
+function addLinkRow(){const row=document.createElement('div');row.className='link-row';row.innerHTML='<input class="form-input" name="linkName" maxlength="30" required placeholder="Button name"><input class="form-input" name="linkUrl" type="url" required placeholder="https://example.com">';botLinks.appendChild(row);}
 for(let i=0;i<3;i++) addLinkRow();
 document.getElementById('openAddBot').addEventListener('click',()=>{addBotForm.hidden=false;addBotForm.scrollIntoView({behavior:'smooth',block:'start'});});
 document.getElementById('addBotLink').addEventListener('click',addLinkRow);
-addBotForm.addEventListener('submit',event=>{event.preventDefault();const urls=[...botLinks.querySelectorAll('input[name="linkUrl"]')];if(urls.length<3||urls.some(input=>!/^https:\/\//i.test(input.value))){document.getElementById('submitStatus').textContent='יש להוסיף לפחות 3 קישורים תקינים שמתחילים ב־HTTPS.';return;}document.getElementById('submitStatus').textContent='הטופס מוכן, אך מערכת שליחת הבקשות עדיין לא חוברה. הבוט לא נשלח.';});
+addBotForm.addEventListener('submit',event=>{event.preventDefault();const urls=[...botLinks.querySelectorAll('input[name="linkUrl"]')];if(urls.length<3||urls.some(input=>!/^https:\/\//i.test(input.value))){document.getElementById('submitStatus').textContent='Please add at least 3 valid HTTPS links.';return;}document.getElementById('submitStatus').textContent='The form is ready, but review submissions are not connected yet. Your bot has not been sent.';});
 googleSignIn.addEventListener('click',()=>{window.location.assign('/api/auth/google');});
 googleSignOut.addEventListener('click',async()=>{await fetch('/api/auth/logout',{method:'POST',cache:'no-store'});window.location.assign('/');});
 (async()=>{
@@ -153,17 +153,17 @@ googleSignOut.addEventListener('click',async()=>{await fetch('/api/auth/logout',
     const response=await fetch('/api/auth/me?check='+Date.now(),{credentials:'same-origin',cache:'no-store'});
     const data=await response.json();
     if(data.authenticated){
-      authStatus.textContent='מחובר בתור '+data.user.email;
+      authStatus.textContent='Signed in as '+data.user.email;
       googleSignIn.hidden=true; googleSignOut.hidden=false; myBotsActions.hidden=false;
       if(data.isOwner===true) pendingTab.hidden=false;
       if(new URLSearchParams(location.search).get('login')==='success') selectTab('mybots');
       else if(location.hash==='#pending-requests' && data.isOwner===true) selectTab('pending');
     } else {
       pendingTab.hidden=true; myBotsActions.hidden=true; addBotForm.hidden=true;
-      if(new URLSearchParams(location.search).has('login_error')) authStatus.textContent='לא הצלחנו להשלים את ההתחברות ל־Google. נסו שוב.';
-      else authStatus.textContent='יש להתחבר עם Google כדי לנהל את הבוטים שלכם.';
+      if(new URLSearchParams(location.search).has('login_error')) authStatus.textContent='Google sign-in could not be completed. Please try again.';
+      else authStatus.textContent='Sign in with Google to manage your bots.';
     }
-  } catch(e) { authStatus.textContent='לא ניתן לבדוק כרגע את מצב ההתחברות. רעננו את הדף.'; }
+  } catch(e) { authStatus.textContent='Sign-in status is temporarily unavailable. Please refresh.'; }
 })();
 </script>
 </body>
