@@ -57,6 +57,7 @@ footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
 <nav class="tabs" aria-label="Main navigation" role="tablist">
 <button class="tab" id="botsTab" type="button" role="tab" aria-selected="true" aria-controls="botsPanel">Bots</button>
 <button class="tab" id="myBotsTab" type="button" role="tab" aria-selected="false" aria-controls="myBotsPanel">My bots/Add bot</button>
+<button class="tab" id="pendingTab" type="button" role="tab" aria-selected="false" aria-controls="pendingPanel" hidden>Pending requests</button>
 </nav>
 <section class="panel" id="botsPanel" role="tabpanel" aria-labelledby="botsTab">
 <section class="bot-list" aria-label="Discord bot directory">
@@ -88,24 +89,56 @@ footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
 <button class="tab" id="googleSignOut" type="button" hidden>Sign out</button>
 </div>
 </section>
+<section class="panel" id="pendingPanel" role="tabpanel" aria-labelledby="pendingTab" hidden>
+<div class="signin-card">
+<h2>Pending requests</h2>
+<p id="pendingStatus" class="auth-status">You are signed in as the authorized owner.</p>
+<div class="auth-status">No pending requests are available yet. Request storage has not been connected.</div>
+</div>
+</section>
 <footer>Bot details and links belong to their respective creators.</footer>
 </main>
 
 <script>
 const botsTab=document.getElementById('botsTab');
 const myBotsTab=document.getElementById('myBotsTab');
+const pendingTab=document.getElementById('pendingTab');
 const botsPanel=document.getElementById('botsPanel');
 const myBotsPanel=document.getElementById('myBotsPanel');
-function selectTab(which){const isBots=which==='bots';botsTab.setAttribute('aria-selected',String(isBots));myBotsTab.setAttribute('aria-selected',String(!isBots));botsPanel.hidden=!isBots;myBotsPanel.hidden=isBots;}
+const pendingPanel=document.getElementById('pendingPanel');
+function selectTab(which){
+  const isBots=which==='bots', isPending=which==='pending';
+  botsTab.setAttribute('aria-selected',String(isBots));
+  myBotsTab.setAttribute('aria-selected',String(!isBots&&!isPending));
+  pendingTab.setAttribute('aria-selected',String(isPending));
+  botsPanel.hidden=!isBots; myBotsPanel.hidden=isBots||isPending; pendingPanel.hidden=!isPending;
+}
 botsTab.addEventListener('click',()=>selectTab('bots'));
 myBotsTab.addEventListener('click',()=>selectTab('mybots'));
+pendingTab.addEventListener('click',()=>selectTab('pending'));
 document.getElementById('addYourBot').addEventListener('click',event=>{event.preventDefault();selectTab('mybots');});
 const googleSignIn=document.getElementById('googleSignIn');
 const googleSignOut=document.getElementById('googleSignOut');
 const authStatus=document.getElementById('authStatus');
 googleSignIn.addEventListener('click',()=>{window.location.assign('/api/auth/google');});
-googleSignOut.addEventListener('click',async()=>{await fetch('/api/auth/logout',{method:'POST'});window.location.reload();});
-(async()=>{try{const response=await fetch('/api/auth/me',{credentials:'same-origin'});const data=await response.json();if(data.authenticated){authStatus.textContent='Signed in as '+data.user.email;googleSignIn.hidden=true;googleSignOut.hidden=false;}else if(new URLSearchParams(location.search).has('login_error')){authStatus.textContent='Google sign-in could not be completed. Please try again.';}}catch(e){authStatus.textContent='Sign-in status is temporarily unavailable.';}})();
+googleSignOut.addEventListener('click',async()=>{await fetch('/api/auth/logout',{method:'POST',cache:'no-store'});window.location.assign('/');});
+(async()=>{
+  try {
+    const response=await fetch('/api/auth/me?check='+Date.now(),{credentials:'same-origin',cache:'no-store'});
+    const data=await response.json();
+    if(data.authenticated){
+      authStatus.textContent='Signed in as '+data.user.email;
+      googleSignIn.hidden=true; googleSignOut.hidden=false;
+      if(data.isOwner===true) pendingTab.hidden=false;
+      if(new URLSearchParams(location.search).get('login')==='success') selectTab('mybots');
+      else if(location.hash==='#pending-requests' && data.isOwner===true) selectTab('pending');
+    } else {
+      pendingTab.hidden=true;
+      if(new URLSearchParams(location.search).has('login_error')) authStatus.textContent='Google sign-in could not be completed. Please try again.';
+      else authStatus.textContent='Sign in with Google to manage your bots.';
+    }
+  } catch(e) { authStatus.textContent='Sign-in status is temporarily unavailable. Please refresh.'; }
+})();
 </script>
 </body>
 </html>
