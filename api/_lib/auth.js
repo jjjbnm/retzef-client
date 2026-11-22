@@ -1,0 +1,8 @@
+const crypto = require('crypto');
+const OWNER_EMAIL = 'helpme9284772@gmail.com';
+function safeEqual(a,b){const x=Buffer.from(a||'');const y=Buffer.from(b||'');return x.length===y.length&&crypto.timingSafeEqual(x,y);}
+function getUser(req){const secret=process.env.SESSION_SECRET;if(!secret)return null;const part=(req.headers.cookie||'').split(';').map(v=>v.trim()).find(v=>v.startsWith('retzef_session='));if(!part)return null;try{const value=decodeURIComponent(part.slice(15));const i=value.lastIndexOf('.');const payload=value.slice(0,i),sig=value.slice(i+1);const expected=crypto.createHmac('sha256',secret).update(payload).digest('base64url');if(!payload||!safeEqual(sig,expected))return null;const user=JSON.parse(Buffer.from(payload,'base64url').toString('utf8'));if(!user.email||user.exp<Date.now())return null;return user;}catch(e){return null;}}
+function isOwner(user){return !!user&&user.email.toLowerCase()===OWNER_EMAIL;}
+function redisReady(){return !!(process.env.UPSTASH_REDIS_REST_URL&&process.env.UPSTASH_REDIS_REST_TOKEN);}
+async function redis(commands){const raw=process.env.UPSTASH_REDIS_REST_URL;const url=raw.endsWith('/')?raw.slice(0,-1):raw;const r=await fetch(url+'/pipeline',{method:'POST',headers:{Authorization:'Bearer '+process.env.UPSTASH_REDIS_REST_TOKEN,'Content-Type':'application/json'},body:JSON.stringify(commands)});if(!r.ok)throw new Error('Storage request failed');const data=await r.json();if(!Array.isArray(data)||data.some(x=>x.error))throw new Error('Storage command failed');return data.map(x=>x.result);}
+module.exports={getUser,isOwner,redisReady,redis};

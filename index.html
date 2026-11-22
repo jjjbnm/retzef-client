@@ -95,7 +95,7 @@ footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
 <div id="myBotsActions" hidden><button class="google-button" id="openAddBot" type="button">+ Add bot</button></div>
 <form id="addBotForm" class="signin-card" hidden>
 <h2>Add a Discord bot</h2>
-<label class="form-label" for="botName">Bot name</label><input class="form-input" id="botName" name="botName" maxlength="60" required placeholder="הקלידו את Bot name">
+<label class="form-label" for="botName">Bot name</label><input class="form-input" id="botName" name="botName" maxlength="60" required placeholder="Enter bot name">
 <label class="form-label" for="botDescription">Bot description</label><textarea class="form-input" id="botDescription" name="botDescription" maxlength="500" rows="4" required placeholder="Describe what your bot does"></textarea>
 <label class="form-label" for="botLogo">Bot logo</label><input class="form-input" id="botLogo" name="botLogo" type="file" accept="image/*" required>
 <label class="form-label" for="botBanner">Bot banner</label><input class="form-input" id="botBanner" name="botBanner" type="file" accept="image/*">
@@ -111,7 +111,7 @@ footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
 <div class="signin-card">
 <h2>Pending requests</h2>
 <p id="pendingStatus" class="auth-status">You are signed in as the authorized owner.</p>
-<div class="auth-status">No pending requests are available yet. Request storage has not been connected.</div>
+<div id="pendingRequests" class="bot-list" aria-live="polite">Loading requests…</div>
 </div>
 </section>
 <footer>Bot details and links belong to their respective creators.</footer>
@@ -141,11 +141,18 @@ const authStatus=document.getElementById('authStatus');
 const myBotsActions=document.getElementById('myBotsActions');
 const addBotForm=document.getElementById('addBotForm');
 const botLinks=document.getElementById('botLinks');
+let currentIsOwner=false;
 function addLinkRow(){const row=document.createElement('div');row.className='link-row';row.innerHTML='<input class="form-input" name="linkName" maxlength="30" required placeholder="Button name"><input class="form-input" name="linkUrl" type="url" required placeholder="https://example.com">';botLinks.appendChild(row);}
 for(let i=0;i<3;i++) addLinkRow();
 document.getElementById('openAddBot').addEventListener('click',()=>{addBotForm.hidden=false;addBotForm.scrollIntoView({behavior:'smooth',block:'start'});});
 document.getElementById('addBotLink').addEventListener('click',addLinkRow);
-addBotForm.addEventListener('submit',event=>{event.preventDefault();const urls=[...botLinks.querySelectorAll('input[name="linkUrl"]')];if(urls.length<3||urls.some(input=>!/^https:\/\//i.test(input.value))){document.getElementById('submitStatus').textContent='Please add at least 3 valid HTTPS links.';return;}document.getElementById('submitStatus').textContent='The form is ready, but review submissions are not connected yet. Your bot has not been sent.';});
+function readImage(file){return new Promise((resolve,reject)=>{if(!file)return resolve('');if(file.size>1024*1024)return reject(new Error('Each image must be under 1 MB.'));const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error('Could not read image.'));reader.readAsDataURL(file);});}
+addBotForm.addEventListener('submit',async event=>{event.preventDefault();const status=document.getElementById('submitStatus');const links=[...botLinks.querySelectorAll('.link-row')].map(row=>({label:row.querySelector('input[name="linkName"]').value.trim(),url:row.querySelector('input[name="linkUrl"]').value.trim()}));if(links.length<3||links.some(x=>!x.label||!/^https:\/\//i.test(x.url))){status.textContent='Please add at least 3 links with valid HTTPS URLs.';return;}const submit=addBotForm.querySelector('button[type="submit"]');submit.disabled=true;status.textContent='Sending your bot for review…';try{const logo=await readImage(document.getElementById('botLogo').files[0]);const banner=await readImage(document.getElementById('botBanner').files[0]);const response=await fetch('/api/bots/submit',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:document.getElementById('botName').value.trim(),description:document.getElementById('botDescription').value.trim(),logo,banner,links})});const result=await response.json();if(!response.ok)throw new Error(result.error||'Could not send your request.');status.textContent='Your bot was sent for review!';addBotForm.reset();botLinks.innerHTML='';for(let i=0;i<3;i++)addLinkRow();}catch(error){status.textContent=error.message||'Could not send your request.';}finally{submit.disabled=false;}});
+function addBotCard(bot){const card=document.createElement('article');card.className='bot-card';const logo=document.createElement('div');logo.className='logo-wrap';const img=document.createElement('img');img.src=bot.logo;img.alt=bot.name+' logo';logo.appendChild(img);const content=document.createElement('div');content.className='bot-content';const heading=document.createElement('div');heading.className='bot-heading';const h=document.createElement('h2');h.textContent=bot.name;const tag=document.createElement('span');tag.className='tag';tag.textContent='Community bot';heading.append(h,tag);const desc=document.createElement('p');desc.className='description';desc.textContent=bot.description;content.append(heading,desc);if(bot.banner){const banner=document.createElement('img');banner.className='banner';banner.src=bot.banner;banner.alt=bot.name+' banner';banner.loading='lazy';content.append(banner);}const actions=document.createElement('nav');actions.className='actions';actions.setAttribute('aria-label',bot.name+' links');(bot.links||[]).forEach(link=>{const a=document.createElement('a');a.textContent=link.label;a.href=link.url;a.target='_blank';a.rel='noopener noreferrer';actions.append(a);});content.append(actions);card.append(logo,content);document.querySelector('.bot-list').append(card);}
+async function loadApprovedBots(){try{const r=await fetch('/api/bots/list',{cache:'no-store'});const d=await r.json();(d.bots||[]).forEach(addBotCard);}catch(e){}}
+function renderPending(requests){const host=document.getElementById('pendingRequests');host.innerHTML='';if(!requests.length){host.textContent='No pending requests.';return;}requests.forEach(item=>{const card=document.createElement('article');card.className='bot-card';const content=document.createElement('div');content.className='bot-content';const h=document.createElement('h2');h.textContent=item.name;const p=document.createElement('p');p.className='description';p.textContent=item.description;const meta=document.createElement('p');meta.className='auth-status';meta.textContent='Submitted by '+item.submittedBy.email+' · '+new Date(item.createdAt).toLocaleString();const actions=document.createElement('div');actions.className='actions';for(const action of ['approve','reject']){const b=document.createElement('button');b.className='tab';b.type='button';b.textContent=action==='approve'?'Approve':'Reject';b.addEventListener('click',async()=>{b.disabled=true;try{const r=await fetch('/api/bots/review',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:item.id,action})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Review failed');await loadPending();if(action==='approve')await loadApprovedBots();}catch(e){b.disabled=false;alert(e.message);}});actions.append(b);}content.append(h,p,meta,actions);card.append(content);host.append(card);});}
+async function loadPending(){const host=document.getElementById('pendingRequests');host.textContent='Loading requests…';try{const r=await fetch('/api/bots/pending',{credentials:'same-origin',cache:'no-store'});const d=await r.json();if(!r.ok)throw new Error(d.error||'Could not load requests.');renderPending(d.requests||[]);}catch(e){host.textContent=e.message;}}
+
 googleSignIn.addEventListener('click',()=>{window.location.assign('/api/auth/google');});
 googleSignOut.addEventListener('click',async()=>{await fetch('/api/auth/logout',{method:'POST',cache:'no-store'});window.location.assign('/');});
 (async()=>{
@@ -155,7 +162,7 @@ googleSignOut.addEventListener('click',async()=>{await fetch('/api/auth/logout',
     if(data.authenticated){
       authStatus.textContent='Signed in as '+data.user.email;
       googleSignIn.hidden=true; googleSignOut.hidden=false; myBotsActions.hidden=false;
-      if(data.isOwner===true) pendingTab.hidden=false;
+      if(data.isOwner===true){pendingTab.hidden=false;currentIsOwner=true;loadPending();}
       if(new URLSearchParams(location.search).get('login')==='success') selectTab('mybots');
       else if(location.hash==='#pending-requests' && data.isOwner===true) selectTab('pending');
     } else {
@@ -165,6 +172,7 @@ googleSignOut.addEventListener('click',async()=>{await fetch('/api/auth/logout',
     }
   } catch(e) { authStatus.textContent='Sign-in status is temporarily unavailable. Please refresh.'; }
 })();
+loadApprovedBots();
 </script>
 </body>
 </html>
