@@ -19,7 +19,8 @@ module.exports=async function handler(req,res){
   const profileResponse=await fetch('https://discord.com/api/users/@me',{headers:{Authorization:`Bearer ${tokens.access_token}`}});
   const profile=await profileResponse.json();
   if(!profileResponse.ok||!profile.id||!profile.username)return fail(res,'profile');
-  const session=Buffer.from(JSON.stringify({id:String(profile.id),username:profile.username,name:profile.global_name||profile.username,avatar:profile.avatar||'',exp:Date.now()+7*24*60*60*1000})).toString('base64url');
+  const verifiedEmail=profile.verified===true&&typeof profile.email==='string'?profile.email.trim().toLowerCase():'';
+  const session=Buffer.from(JSON.stringify({id:String(profile.id),username:profile.username,name:profile.global_name||profile.username,avatar:profile.avatar||'',email:verifiedEmail,emailVerified:!!verifiedEmail,exp:Date.now()+7*24*60*60*1000})).toString('base64url');
   const value=`${session}.${sign(session,SESSION_SECRET)}`;
   res.setHeader('Set-Cookie',[clear,`retzef_session=${value}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=604800`]);
   res.writeHead(302,{Location:'/?login=success#my-bots'});res.end();
