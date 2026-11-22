@@ -48,6 +48,8 @@ footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
 .auth-status{color:var(--muted);font-size:13px;margin:0 0 16px}.google-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:min(100%,300px);min-height:44px;padding:0 16px;border-radius:10px;background:#f5f5f5;color:#111;text-decoration:none;font-size:13px;font-weight:700;border:0;cursor:pointer}
 .add-bot-link{display:inline-flex;margin-top:18px;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border-radius:9px;background:#f2f2f2;color:#090909;text-decoration:none;font-size:12px;font-weight:700}
 @media(max-width:520px){.tabs{gap:6px}.tab{flex:1 1 auto}}
+
+.form-label{display:block;text-align:left;font-size:12px;font-weight:650;margin:14px 0 6px;color:#ddd}.form-input{display:block;width:100%;box-sizing:border-box;background:#090909;border:1px solid #383838;border-radius:9px;padding:11px;color:#eee;font:inherit;font-size:13px}.form-heading{display:flex;flex-direction:column;gap:4px;text-align:left;margin:22px 0 10px}.link-row{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;margin:10px 0}.link-row input{min-width:0}.signin-card form{margin-top:20px}.signin-card[hidden],#myBotsActions[hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -90,6 +92,19 @@ footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
 <p id="authStatus" role="status" aria-live="polite" class="auth-status">Sign in with Google to manage your bots.</p>
 <button class="google-button" id="googleSignIn" type="button"><span aria-hidden="true">G</span> Login with Google to continue</button>
 <button class="tab" id="googleSignOut" type="button" hidden>Sign out</button>
+<div id="myBotsActions" hidden><button class="google-button" id="openAddBot" type="button">+ Add bot</button></div>
+<form id="addBotForm" class="signin-card" hidden>
+<h2>Add a Discord bot</h2>
+<label class="form-label" for="botName">Bot name</label><input class="form-input" id="botName" name="botName" maxlength="60" required placeholder="Enter bot name">
+<label class="form-label" for="botDescription">Bot description</label><textarea class="form-input" id="botDescription" name="botDescription" maxlength="500" rows="4" required placeholder="Describe what your bot does"></textarea>
+<label class="form-label" for="botLogo">Bot logo</label><input class="form-input" id="botLogo" name="botLogo" type="file" accept="image/*" required>
+<label class="form-label" for="botBanner">Bot banner</label><input class="form-input" id="botBanner" name="botBanner" type="file" accept="image/*">
+<div class="form-heading"><strong>Bot links</strong><span class="auth-status">At least 3 links are required.</span></div>
+<div id="botLinks"></div>
+<button class="tab" id="addBotLink" type="button">+ Add button</button>
+<button class="google-button" type="submit">Send for review</button>
+<p id="submitStatus" class="auth-status" role="status" aria-live="polite"></p>
+</form>
 </div>
 </section>
 <section class="panel" id="pendingPanel" role="tabpanel" aria-labelledby="pendingTab" hidden>
@@ -123,6 +138,14 @@ document.getElementById('addYourBot').addEventListener('click',event=>{event.pre
 const googleSignIn=document.getElementById('googleSignIn');
 const googleSignOut=document.getElementById('googleSignOut');
 const authStatus=document.getElementById('authStatus');
+const myBotsActions=document.getElementById('myBotsActions');
+const addBotForm=document.getElementById('addBotForm');
+const botLinks=document.getElementById('botLinks');
+function addLinkRow(){const row=document.createElement('div');row.className='link-row';row.innerHTML='<input class="form-input" name="linkName" maxlength="30" required placeholder="Button name"><input class="form-input" name="linkUrl" type="url" required placeholder="https://example.com">';botLinks.appendChild(row);}
+for(let i=0;i<3;i++) addLinkRow();
+document.getElementById('openAddBot').addEventListener('click',()=>{addBotForm.hidden=false;addBotForm.scrollIntoView({behavior:'smooth',block:'start'});});
+document.getElementById('addBotLink').addEventListener('click',addLinkRow);
+addBotForm.addEventListener('submit',event=>{event.preventDefault();const urls=[...botLinks.querySelectorAll('input[name="linkUrl"]')];if(urls.length<3||urls.some(input=>!/^https:\/\//i.test(input.value))){document.getElementById('submitStatus').textContent='Please add at least 3 valid HTTPS links.';return;}document.getElementById('submitStatus').textContent='The form is ready, but review submissions are not connected yet. Your bot has not been sent.';});
 googleSignIn.addEventListener('click',()=>{window.location.assign('/api/auth/google');});
 googleSignOut.addEventListener('click',async()=>{await fetch('/api/auth/logout',{method:'POST',cache:'no-store'});window.location.assign('/');});
 (async()=>{
@@ -131,12 +154,12 @@ googleSignOut.addEventListener('click',async()=>{await fetch('/api/auth/logout',
     const data=await response.json();
     if(data.authenticated){
       authStatus.textContent='Signed in as '+data.user.email;
-      googleSignIn.hidden=true; googleSignOut.hidden=false;
+      googleSignIn.hidden=true; googleSignOut.hidden=false; myBotsActions.hidden=false;
       if(data.isOwner===true) pendingTab.hidden=false;
       if(new URLSearchParams(location.search).get('login')==='success') selectTab('mybots');
       else if(location.hash==='#pending-requests' && data.isOwner===true) selectTab('pending');
     } else {
-      pendingTab.hidden=true;
+      pendingTab.hidden=true; myBotsActions.hidden=true; addBotForm.hidden=true;
       if(new URLSearchParams(location.search).has('login_error')) authStatus.textContent='Google sign-in could not be completed. Please try again.';
       else authStatus.textContent='Sign in with Google to manage your bots.';
     }
