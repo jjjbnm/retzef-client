@@ -4,20 +4,35 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050505">
-<title>Discord Bots</title>
+<meta name="description" content="Discover useful Discord bots for your server.">
+<title>Discord Bots — Retzef Client</title>
 <style>
 :root{color-scheme:dark;--bg:#050505;--panel:#101010;--line:#252525;--muted:#a1a1aa;--text:#f5f5f5}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-.page{width:min(880px,100% - 32px);margin:0 auto;padding:58px 0 72px}
+.page{width:min(900px,100% - 32px);margin:0 auto;padding:54px 0 72px}
 header{margin-bottom:30px}
 .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#888;margin:0 0 12px}
 h1{font-size:clamp(30px,6vw,44px);letter-spacing:-.045em;margin:0;font-weight:750}
 .subtitle{color:var(--muted);font-size:14px;margin:10px 0 0}
-.empty{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#121212,#0c0c0c);padding:36px 24px;text-align:center;color:var(--muted)}
-.empty strong{display:block;color:var(--text);font-size:17px;margin-bottom:8px}
+.bot-list{display:grid;gap:14px}
+.bot-card{display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;align-items:start;background:linear-gradient(145deg,#121212,#0b0b0b);border:1px solid var(--line);border-radius:18px;padding:20px;transition:border-color .2s,transform .2s}
+.bot-card:hover{border-color:#454545;transform:translateY(-2px)}
+.logo-wrap{width:64px;height:64px;border-radius:16px;background:#1c1c1c;border:1px solid #303030;display:grid;place-items:center;overflow:hidden;font-size:25px;font-weight:750;color:#eee}
+.logo-wrap img{width:100%;height:100%;object-fit:cover}
+.bot-content{min-width:0}
+.bot-heading{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bot-heading h2{font-size:19px;letter-spacing:-.02em;margin:0}
+.tag{font-size:10px;color:#c4c4c4;border:1px solid #333;border-radius:99px;padding:4px 8px;letter-spacing:.06em;text-transform:uppercase}
+.description{color:#aaa;font-size:13px;line-height:1.65;margin:9px 0 16px}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.actions a{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 13px;border-radius:9px;border:1px solid #333;color:#eee;text-decoration:none;font-size:12px;font-weight:650;background:#171717;transition:background .2s,border-color .2s}
+.actions a:hover{background:#242424;border-color:#555}
+.actions a.primary{background:#f2f2f2;color:#090909;border-color:#f2f2f2}
+.actions a.primary:hover{background:#d8d8d8}
 footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
+@media(max-width:520px){.page{padding-top:38px}.bot-card{grid-template-columns:52px minmax(0,1fr);gap:13px;padding:15px}.logo-wrap{width:52px;height:52px;border-radius:13px}.actions a{flex:1 1 110px}}
 </style>
 </head>
 <body>
@@ -27,9 +42,19 @@ footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
 <h1>Discord Bots</h1>
 <p class="subtitle">Discover useful bots for your Discord server.</p>
 </header>
-<section class="empty" aria-live="polite">
-<strong>No bots listed</strong>
-There are currently no bots in the directory.
+<section class="bot-list" aria-label="Discord bot directory">
+<article class="bot-card">
+<div class="logo-wrap"><img src="https://petto.sbs/favicon.ico" alt="Petto bot logo" onerror="this.style.display='none';this.parentElement.textContent='P'"></div>
+<div class="bot-content">
+<div class="bot-heading"><h2>Petto</h2><span class="tag">All-in-one bot</span></div>
+<p class="description">A 100% customizable Discord bot with AutoMod, Anti-Raid, Anti-Nuke, Welcomes, Tickets, Leveling, Utility, and a Bot Transfer System to migrate configurations from other bots.</p>
+<nav class="actions" aria-label="Petto links">
+<a class="primary" href="https://petto.sbs/invite" target="_blank" rel="noopener noreferrer">Add to server</a>
+<a href="https://petto.sbs" target="_blank" rel="noopener noreferrer">Go to website</a>
+<a href="https://petto.sbs/support" target="_blank" rel="noopener noreferrer">Go to Discord</a>
+</nav>
+</div>
+</article>
 </section>
 <footer>Bot details and links belong to their respective creators.</footer>
 </main>
