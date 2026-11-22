@@ -42,7 +42,7 @@ footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
 .signin-card{max-width:520px;margin:30px auto;padding:32px 22px;text-align:center;background:linear-gradient(145deg,#121212,#0b0b0b);border:1px solid var(--line);border-radius:18px}
 .signin-card h2{font-size:22px;margin:0 0 10px}
 .signin-card p{color:var(--muted);font-size:13px;margin:0 0 22px}
-.google-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:min(100%,300px);min-height:44px;padding:0 16px;border-radius:10px;background:#f5f5f5;color:#111;text-decoration:none;font-size:13px;font-weight:700;border:0;cursor:pointer}
+.auth-status{color:var(--muted);font-size:13px;margin:0 0 16px}.google-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:min(100%,300px);min-height:44px;padding:0 16px;border-radius:10px;background:#f5f5f5;color:#111;text-decoration:none;font-size:13px;font-weight:700;border:0;cursor:pointer}
 .add-bot-link{display:inline-flex;margin-top:18px;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border-radius:9px;background:#f2f2f2;color:#090909;text-decoration:none;font-size:12px;font-weight:700}
 @media(max-width:520px){.tabs{gap:6px}.tab{flex:1 1 auto}}
 </style>
@@ -83,7 +83,9 @@ footer{margin-top:28px;text-align:center;color:#666;font-size:11px}
 <div class="signin-card">
 <h2>My bots / Add bot</h2>
 <p>Sign in with your Google account to manage your bots and submit a bot for review.</p>
+<p id="authStatus" role="status" aria-live="polite" class="auth-status">Sign in with Google to manage your bots.</p>
 <button class="google-button" id="googleSignIn" type="button"><span aria-hidden="true">G</span> Login with Google to continue</button>
+<button class="tab" id="googleSignOut" type="button" hidden>Sign out</button>
 </div>
 </section>
 <footer>Bot details and links belong to their respective creators.</footer>
@@ -98,7 +100,12 @@ function selectTab(which){const isBots=which==='bots';botsTab.setAttribute('aria
 botsTab.addEventListener('click',()=>selectTab('bots'));
 myBotsTab.addEventListener('click',()=>selectTab('mybots'));
 document.getElementById('addYourBot').addEventListener('click',event=>{event.preventDefault();selectTab('mybots');});
-document.getElementById('googleSignIn').addEventListener('click',()=>{alert('Google sign-in is not connected yet. OAuth setup is required before accounts can sign in.');});
+const googleSignIn=document.getElementById('googleSignIn');
+const googleSignOut=document.getElementById('googleSignOut');
+const authStatus=document.getElementById('authStatus');
+googleSignIn.addEventListener('click',()=>{window.location.assign('/api/auth/google');});
+googleSignOut.addEventListener('click',async()=>{await fetch('/api/auth/logout',{method:'POST'});window.location.reload();});
+(async()=>{try{const response=await fetch('/api/auth/me',{credentials:'same-origin'});const data=await response.json();if(data.authenticated){authStatus.textContent='Signed in as '+data.user.email;googleSignIn.hidden=true;googleSignOut.hidden=false;}else if(new URLSearchParams(location.search).has('login_error')){authStatus.textContent='Google sign-in could not be completed. Please try again.';}}catch(e){authStatus.textContent='Sign-in status is temporarily unavailable.';}})();
 </script>
 </body>
 </html>
